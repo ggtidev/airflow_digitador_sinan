@@ -1,63 +1,116 @@
 # ============================================================
+
 # 🧩 SINAN-RPA - Dependências Principais (versão compatível com Python 3.13)
+
 # ============================================================
+
 # Sistema: Windows 11 x64
 # Ambiente: venv do Python 3.13.9
-# ------------------------------------------------------------
-# Este arquivo foi ajustado para o cenário em que:
-# - Python 3.13 está sendo utilizado
-# - Visual Studio Build Tools 2022 está instalado (recomendado)
-# - Todas as bibliotecas críticas têm wheels binárias (sem necessidade de compilação)
+
 # ------------------------------------------------------------
 
-# ============================================================
-# 🔹 Automação e captura de tela
+# Este arquivo cobre todas as bibliotecas usadas nos módulos:
+# - utils.py
+# - TesteOpenCV_validar_templates.py
+# - violencia.py
+# - main.py
+
+# ------------------------------------------------------------
+
 # ============================================================
 
-pyautogui==0.9.54          # Automação do teclado/mouse
-pyscreeze==0.1.30          # Suporte a captura de tela usado pelo PyAutoGUI
-pillow==10.4.0             # Biblioteca de imagens (com wheel já compatível com Python 3.13)
+# 🔹 Automação e captura de tela (Mouse/Teclado/Imagem)
 
 # ============================================================
+
+pyautogui==0.9.54
+pyscreeze==0.1.30
+pillow==10.4.0
+
+# ============================================================
+
 # 🔹 OpenCV + NumPy (visão computacional)
-# ============================================================
-
-opencv-python==4.12.0.84   # Versão atual compatível com NumPy 2.x e Python 3.13
-opencv-contrib-python==4.12.0.84  # Módulos extras do OpenCV
-numpy==2.3.1               # NumPy 2.x – compatível com OpenCV 4.12 e Python 3.13
 
 # ============================================================
-# 🔹 Manipulação de dados e exportação de relatórios
+
+opencv-python
+opencv-contrib-python
+numpy==2.3.1
+
 # ============================================================
 
-pandas==2.2.3              # Necessita NumPy >= 2.0; possui wheel binária estável no PyPI
+# 🔹 Manipulação de dados, Banco de Dados e exportação de relatórios
 
 # ============================================================
+
+pandas==2.2.3
+# Bibliotecas para conexão de Banco de Dados e manipulação de arquivos
+sqlalchemy
+psycopg2
+openpyxl
+
+# (openpyxl é necessário para o pandas exportar .xlsx)
+
+# ============================================================
+
 # 🔹 Variáveis de ambiente e API
-# ============================================================
-
-python-dotenv==1.0.1       # Leitura do arquivo .env (usuários, senhas etc.)
-requests==2.32.3           # Comunicação HTTP com a API
 
 # ============================================================
-# 🔹 Entrada de teclado e eventos
-# ============================================================
 
-keyboard==0.13.5           # Automação e leitura de teclas do sistema
-
-# ============================================================
-# 🔹 Captura de tela ultrarrápida
-# ============================================================
-
-mss==9.0.1                 # Captura de tela rápida (usado na função localizar_template_rapido)
+python-dotenv==1.0.1
+requests==2.32.3
 
 # ============================================================
-# 🔹 Observações
+
+# 🔹 Entrada de teclado e eventos (Hooks globais)
+
 # ============================================================
-# - Este conjunto é estável para Python 3.13.9, testado com OpenCV e PyAutoGUI.
-# - Caso ocorra erro de compilação, instale o Visual Studio Build Tools:
-#   https://visualstudio.microsoft.com/visual-cpp-build-tools/
-#   e marque “Desktop development with C++” + “Windows 11 SDK”.
-# - Após instalar tudo, verifique com:
-#   python -c "import cv2, numpy, pandas, PIL; print('✅', cv2.__version__, numpy.__version__, pandas.__version__, PIL.__version__)"
+
+keyboard==0.13.5
+
 # ============================================================
+
+# 🔹 Captura de tela ultrarrápida (Visão Computacional)
+
+# ============================================================
+
+mss==9.0.1
+python-mss
+
+# (Nota: no pip o pacote chama-se 'python-mss', mas no código usa-se 'import mss')
+
+# ============================================================
+
+# 🔹 Monitoramento de Recursos do Sistema
+
+# ============================================================
+
+psutil
+
+# ============================================================
+
+# 🔹 Observações de Instalação
+
+# ============================================================
+
+# - Compatível com Python 3.10 a 3.13 no Windows 11.
+
+# - Caso apareçam erros de compilação (especialmente no mss ou opencv),
+# instale o Visual Studio Build Tools:
+# https://visualstudio.microsoft.com/visual-cpp-build-tools/
+# (Selecione “Desktop development with C++” + “Windows 11 SDK”)
+
+# - Para instalar tudo de uma vez:
+# pip install -r requirements.txt
+
+# - Validação pós-instalação:
+# python -c "import cv2, numpy, pandas, PIL, mss, psutil, sqlalchemy, psycopg2; print('✅ Bibliotecas OK')"
+
+# ============================================================
+
+# ===========================================================
+# 🔹 Framework Web (para relatórios interativos)
+# ===========================================================
+Flask
+
+

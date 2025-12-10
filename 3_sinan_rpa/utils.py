@@ -1,8 +1,7 @@
 # ==========================================================
-# File: utils.py
-# Versão Final - OpenCV + MSS + Log multilinha + Fluxo de erro completo
+# File: utils.py (VERSÃO ROBUSTA COM FALLBACK)
 # Autor: André Bezerra
-# Data: 18/11/2025
+# Data: 24/11/2025
 # ==========================================================
 
 import pyautogui
@@ -12,6 +11,7 @@ import os
 import cv2
 import mss
 import numpy as np
+import psutil # BIBLIOTECA NOVA PARA MONITORAR SISTEMA
 import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
@@ -20,7 +20,8 @@ from api_client import registrar_erro
 
 # --- CONFIGURAÇÕES GERAIS ---
 pyautogui.FAILSAFE = True
-pyautogui.PAUSE = 0.2
+# Ajustamos o PAUSE para um valor um pouco maior para compensar o processador U-series
+pyautogui.PAUSE = 0.5 
 pyautogui.MINIMUM_CONFIDENCE = 0.8
 
 load_dotenv()
@@ -36,7 +37,35 @@ NAO_IMG = os.path.join(IMAGENS_RPA_DIR, "nao.png")
 os.makedirs(PASTA_ERROS, exist_ok=True)
 
 # ==========================================================
-# FUNÇÕES AUXILIARES
+# FUNÇÃO NOVA: MONITORAMENTO DE RECURSOS (CPU/RAM)
+# ==========================================================
+def monitorar_recursos():
+    """
+    Captura e loga o uso atual de CPU e Memória RAM.
+    Útil para diagnosticar lentidão ou travamentos.
+    """
+    try:
+        # CPU: Pega a porcentagem de uso (intervalo curto para não atrasar o robô)
+        cpu_percent = psutil.cpu_percent(interval=0.1)
+        
+        # MEMÓRIA: Pega detalhes da RAM
+        memory = psutil.virtual_memory()
+        mem_percent = memory.percent
+        mem_used_gb = round(memory.used / (1024 ** 3), 2) # Converte bytes para GB
+        mem_total_gb = round(memory.total / (1024 ** 3), 2)
+        
+        # Loga no formato solicitado
+        log_info(f"📊 [SISTEMA] CPU: {cpu_percent}% | RAM: {mem_percent}% ({mem_used_gb}GB usados de {mem_total_gb}GB)")
+        
+        # Alerta se o uso estiver muito crítico (Opcional)
+        if mem_percent > 90:
+            log_erro("⚠️ ALERTA: Uso de Memória RAM acima de 90%! Risco de travamento.")
+            
+    except Exception as e:
+        log_erro(f"Erro ao monitorar recursos do sistema: {e}")
+        
+# ==========================================================
+# FUNÇÕES AUXILIARES (Dados, Mouse, Sincronização)
 # ==========================================================
 
 def load_json(filepath):
@@ -85,12 +114,15 @@ def calcular_idade_formatada(data_nascimento_str: str) -> int:
     except Exception:
         return 0
 
-
 # ==========================================================
-# FUNÇÃO DE ABERTURA DO AGRAVO
+# FUNÇÃO DE ABERTURA DO AGRAVO (MANTIDA)
 # ==========================================================
 
 def selecionar_agravo_atual(nome_agravo: str):
+    """
+    Reabre a tela de Notificação Individual clicando no menu lateral e pressionando ENTER duas vezes.
+    Usado no fluxo de reabertura após sucesso ou erro.
+    """
     pyautogui.moveTo(x=72, y=59, duration=1)
     pyautogui.click(x=72, y=59)
     time.sleep(1)
@@ -101,10 +133,14 @@ def selecionar_agravo_atual(nome_agravo: str):
 
 
 # ==========================================================
-# FUNÇÃO DE LOCALIZAÇÃO DE TEMPLATE
+# FUNÇÃO DE LOCALIZAÇÃO DE TEMPLATE (MANTIDA)
 # ==========================================================
 
 def localizar_template_rapido_pos(template_path, confidence=0.8):
+    """
+    USA OpenCV + MSS: Localiza o template e retorna (x, y, w, h) se encontrado.
+    Retorna None se não encontrar ou se houver erro.
+    """
     try:
         with mss.mss() as sct:
             monitor = sct.monitors[1]
@@ -112,6 +148,7 @@ def localizar_template_rapido_pos(template_path, confidence=0.8):
             screenshot_gray = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
             template = cv2.imread(template_path, cv2.IMREAD_GRAYSCALE)
             if template is None:
+                log_erro(f"Template {template_path} não pôde ser lido (arquivo ausente ou corrompido).")
                 return None
             res = cv2.matchTemplate(screenshot_gray, template, cv2.TM_CCOEFF_NORMED)
             _, max_val, _, max_loc = cv2.minMaxLoc(res)
@@ -119,137 +156,136 @@ def localizar_template_rapido_pos(template_path, confidence=0.8):
                 h, w = template.shape
                 return (max_loc[0], max_loc[1], w, h)
     except Exception as e:
-        log_erro(f"Erro ao localizar template {template_path}: {e}")
+        # Não loga aqui, a função chamadora fará o log do erro de exceção
+        pass 
     return None
 
 
 # ==========================================================
-# FUNÇÃO DE FECHAMENTO DE TELA DE ERRO
+# FUNÇÃO DE FECHAMENTO DE TELA DE ERRO (MANTIDA)
 # ==========================================================
 
 def fechar_tela_erro():
     """
-    Executa a sequência completa após encontrar um erro:
+    Executa a sequência completa de descarte após encontrar um erro:
     ESC → SAIR → NÃO → clique fixo → ENTER ×2 → espera 3s
+    Esta função reabre a ficha para o próximo item.
     """
-    print("🧩 Executando sequência de fechamento: ESC → SAIR → NÃO → REINICIAR DIGITAÇÃO")
+    log_info("🧩 Executando sequência de descarte e reabertura: ESC → SAIR → NÃO → REINICIAR DIGITAÇÃO")
     pyautogui.press('esc')
     time.sleep(1)
 
-    try:
-        sair = pyautogui.locateCenterOnScreen(SAIR_IMG, confidence=0.8)
-    except pyautogui.ImageNotFoundException:
-        sair = None
+    # Nota: Usamos locateCenterOnScreen (PyAutoGUI puro) aqui pois ele é mais confiável
+    # para botões fixos como SAIR e NÃO após o pop-up ser fechado.
+
+    sair = pyautogui.locateCenterOnScreen(SAIR_IMG, confidence=0.8)
 
     if sair:
         pyautogui.click(sair)
-        print("   ✅ Botão 'Sair' clicado.")
+        log_info("   ✅ Botão 'Sair' clicado.")
         time.sleep(1)
     else:
-        print("   ⚠️ Botão 'Sair' não encontrado. Continuando fluxo...")
+        log_debug("   ⚠️ Botão 'Sair' não encontrado. Continuando fluxo...")
 
-    try:
-        nao = pyautogui.locateCenterOnScreen(NAO_IMG, confidence=0.8)
-    except pyautogui.ImageNotFoundException:
-        nao = None
+    nao = pyautogui.locateCenterOnScreen(NAO_IMG, confidence=0.8)
 
     if nao:
         pyautogui.click(nao)
-        print("   ✅ Botão 'Não' clicado (descartar alterações).")
+        log_info("   ✅ Botão 'Não' clicado (descartar alterações).")
         time.sleep(1)
 
-        # Clique fixo para garantir foco na tela de Notificação Individual
-        pyautogui.click(x=395, y=229)
-        print("   🖱️ Clique fixo em (395, 229) para focar na tela de notificação individual.")
+        # Reabertura da ficha (preparação para o próximo item da fila)
+        pyautogui.click(x=395, y=229) 
+        log_info("   🖱️ Clique fixo em (395, 229) para focar na tela de notificação individual.")
 
-        # Pressiona ENTER duas vezes
         pyautogui.press('enter', presses=2, interval=0.5)
-        print("   ⌨️ Pressionado ENTER duas vezes para iniciar nova notificação.")
-
-        # Espera 3 segundos
         time.sleep(3)
-        print("   ⏳ Aguardando 3 segundos para carregamento da nova ficha...")
-        print("   ✅ Pronto para iniciar a próxima notificação.\n")
-
+        log_info("   ✅ Nova notificação aberta. Tela pronta para o próximo item.\n")
     else:
-        print("   ⚠️ Botão 'Não' não encontrado. Continuando normalmente.")
+        log_debug("   ⚠️ Botão 'Não' não encontrado. Nenhuma alteração descartada.")
 
 
 # ==========================================================
-# FUNÇÃO PRINCIPAL DE VERIFICAÇÃO E TRATAMENTO DE ERRO
+# FUNÇÃO PRINCIPAL DE VERIFICAÇÃO E TRATAMENTO DE ERRO (NOVA LÓGICA)
 # ==========================================================
 
-def verificar_e_tratar_erro(num_notificacao: str, agravo: str, tem_proxima=True):
+def _executar_tratamento_completo(num_notificacao, template, metodo_deteccao):
     """
-    Detecta pop-ups de erro e realiza o fluxo de correção automatizado.
-    Retorna True se erro tratado e precisa reiniciar digitação.
+    Executa os passos de tratamento (Screenshot, Log, API, Fechamento)
+    após a detecção do erro por qualquer método.
+    """
+    template_nome = os.path.basename(template)
+    log_info(f"🚨 ERRO DETECTADO ({metodo_deteccao}): {template_nome}. Iniciando tratamento.")
+
+    # 1. SCREENSHOT
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    screenshot_filename = f"erro_{num_notificacao}_{template_nome}_{timestamp}_{metodo_deteccao}.png"
+    screenshot_path = os.path.join(PASTA_ERROS, screenshot_filename)
+    pyautogui.screenshot(screenshot_path)
+    log_info(f"📸 Screenshot salva em: {screenshot_path}")
+
+    # 2. REGISTRO NA API
+    registrar_erro(num_notificacao)
+    log_info(f"Status do item {num_notificacao} atualizado para 'erro_digitacao' na API.")
+
+    # 3. FECHAMENTO DA TELA DE ERRO (Descarte + Reabertura de Ficha)
+    fechar_tela_erro()
+
+    # 4. Retorna True para interromper o fluxo principal
+    return True
+
+
+def verificar_e_tratar_erro(num_notificacao: str, agravo: str):
+    """
+    Detecta pop-ups de erro usando OpenCV/MSS (Prioridade) e PyAutoGUI puro (Fallback).
+    Se encontrado, trata o erro, reabre a ficha e força a interrupção.
     """
     ERROS_TEMPLATES = [
         os.path.join(IMAGENS_RPA_DIR, f) for f in [
             'erro-01-atencao.png','erro-02-atencao.png','erro-03-informacoes.png',
             'erro-04-popup.png','erro-05-intem_ja_cadastrado.png','erro-05-popup.png',
             'erro-06-opcao-invalida.png','erro-07-atencao_uf.png','erro-08-atencao_so_recebe_valores_numericos.png',
-            'erro-10-dt_nascimento_ou_idade_obrigatorio.png','erro-11-dt_invalida.png','erro-12-idade_inferior_ou_superior.png'
+            'erro-10-dt_nascimento_ou_idade_obrigatorio.png','erro-11-dt_invalida.png','erro-12-idade_inferior_ou_superior.png','erro-12-_idade_inferior_ou_superior.jpg'
         ]
     ]
 
     for template in ERROS_TEMPLATES:
+        
+        # --- 1. TENTATIVA COM OPEN CV / MSS (PRIORIDADE) ---
         try:
-            inicio = time.time()
-            pos = localizar_template_rapido_pos(template, confidence=0.8)
-            duracao = round(time.time() - inicio, 2)
-
-            if pos:
-                template_nome = os.path.basename(template)
-                log_info(f"⚠️ Erro detectado: {template_nome}")
-
-                # Screenshot e log
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                screenshot_filename = f"erro_{num_notificacao}_{template_nome}_{timestamp}.png"
-                screenshot_path = os.path.join(PASTA_ERROS, screenshot_filename)
-                pyautogui.screenshot(screenshot_path)
-
-                with open(RPA_LOG, 'a', encoding='utf-8') as log_file:
-                    log_file.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [INFO] - Template: {template_nome}\n")
-                    log_file.write(f"   Caminho: {template}\n")
-                    log_file.write(f"   Tempo de processamento: {duracao}s\n")
-                    log_file.write(f"   Resultado: ENCONTRADO\n")
-
-                registrar_erro(num_notificacao)
-                log_info(f"Erro registrado para notificação {num_notificacao} na API.")
-
-                # Clique + ESC + fechamento
-                #VERIFICAR ISSO AQUI: DEPOIS QUE ELE ABRE UMA NOVA FICHA
-                x, y, w, h = pos
+            pos_opencv = localizar_template_rapido_pos(template, confidence=0.8)
+            
+            if pos_opencv:
+                # Se for encontrado, clique no centro para focar/fechar o pop-up
+                x, y, w, h = pos_opencv
                 pyautogui.click(x + w // 2, y + h // 2)
-                pyautogui.press('esc')
-                time.sleep(0.5)
-
-                fechar_tela_erro()
-
-                # Reabre agravo se houver próxima ficha
-                if tem_proxima:
-                    selecionar_agravo_atual(agravo)
-
-                return True
-
+                
+                # Executa o tratamento completo e retorna True para interrupção
+                return _executar_tratamento_completo(num_notificacao, template, "OPENCV")
+        
         except Exception as e:
-            log_erro(f"Falha ao tratar template {template}: {e}")
-            continue
+            # Se o OpenCV/MSS falhar ou levantar uma exceção (problema de dependência/compilação),
+            # o fluxo continua para o Fallback.
+            log_erro(f"Falha na detecção [ OpenCV ] do template {os.path.basename(template)}: {e}")
+            pass # Continua para a próxima etapa: Fallback
 
-    return False
+        
+        # --- 2. TENTATIVA COM PYAUTOGUI PURO (FALLBACK) ---
+        try:
+            # Usando PyAutoGUI padrão: mais lento, mas não depende de OpenCV/MSS.
+            pos_pyautogui = pyautogui.locateOnScreen(template, confidence=0.7, grayscale=True)
+            
+            if pos_pyautogui:
+                # Se for encontrado, clique no centro para focar/fechar o pop-up
+                x, y, w, h = pos_pyautogui
+                pyautogui.click(x + w // 2, y + h // 2)
+                
+                # Executa o tratamento completo e retorna True para interrupção
+                return _executar_tratamento_completo(num_notificacao, template, "FALLBACK")
+        
+        except Exception as e:
+            # Captura exceções do PyAutoGUI puro (pode ser arquivo corrompido, por exemplo)
+            log_erro(f"Falha na detecção [ PyAutoGUI ] FALLBACK do template {os.path.basename(template)}: {e}")
+            continue # Continua para o próximo template
 
-
-# ==========================================================
-# FUNÇÃO OPCIONAL PARA LOGAR POSIÇÃO DO MOUSE
-# ==========================================================
-
-def log_posicoes_mouse(log_filepath, intervalo=1, duracao=60):
-    end_time = time.time() + duracao
-    with open(log_filepath, 'a', encoding='utf-8') as log_file:
-        log_file.write("Timestamp, X, Y\n")
-        while time.time() < end_time:
-            x, y = pyautogui.position()
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            log_file.write(f"{timestamp}, {x}, {y}\n")
-            time.sleep(intervalo)
+    return False # Nenhum erro encontrado

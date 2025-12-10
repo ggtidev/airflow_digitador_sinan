@@ -2,6 +2,8 @@ import time
 from api_client import buscar_filas
 from agravosscripts.violencia import executar_violencia
 from logger import log_info, log_erro
+# 1. Importe a nova função
+from relatorios import gerar_relatorio_final
 
 AGRAVOS_DISPONIVEIS = {
     "VIOLENCIA_INTERPESSOAL_AUTOPROVOCADA": executar_violencia
@@ -29,13 +31,16 @@ def processar_fila(filas):
         else:
             log_erro(f"Agravo '{nome_agravo}' não implementado.")
 
-        time.sleep(5)
+        time.sleep(3)
 
 def main():
     filas = buscar_filas()
 
     if filas:
         processar_fila(filas)
+
+        # 2. CHAME AQUI: Após processar toda a fila, gera o relatório atualizado
+        gerar_relatorio_final()
     else:
         log_erro("404 - Nenhum dado encontrado na fila.")
 

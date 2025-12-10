@@ -1,5 +1,5 @@
 ==== LOG DE VALIDAÇÃO DAS NOTIFICAÇÕES ====
-Data e hora da execução: 03/11/2025 12:09:03
+Data e hora da execução: 19/11/2025 15:12:53
 ------------------------------------------------------------
 
 [OK] Record 682: Todos os campos principais preenchidos corretamente.
@@ -55,7 +55,7 @@ Data e hora da execução: 03/11/2025 12:09:03
 
 ------------------------------------------------------------
 RESUMO FINAL DA EXECUÇÃO
-Data/hora: 03/11/2025 12:09:03
+Data/hora: 19/11/2025 15:12:53
 Total de notificações processadas: 50
 Total com status 'pendente': 49
 Total com status 'erro': 1

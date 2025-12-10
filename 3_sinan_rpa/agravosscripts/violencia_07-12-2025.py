@@ -772,90 +772,44 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     
     pyautogui.write(campos['motivo_violencia']) # pergunta 55
     pyautogui.press("tab")
-    
-    # Bloco Tipo de Violência (Perguntas 56.1 a 56.10)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-
-    # pergunta 56.1
-    pyautogui.write(campos.get('fisica', '9')) 
+    pyautogui.write(campos['fisica']) # pergunta 56.1
     pyautogui.press("tab")
-
-    # pergunta 56.2
-    pyautogui.write(campos.get('moral_psicologica', '9')) 
+    pyautogui.write(campos['moral_psicologica']) # pergunta 56.2
     pyautogui.press("tab")
-
-    # pergunta 56.3
-    pyautogui.write(campos.get('tortura', '9')) 
+    pyautogui.write(campos['tortura']) # pergunta 56.3
     pyautogui.press("tab")
-
-    # pergunta 56.4 (Violência Sexual - Valor '9' fixo/chumbado)
-    pyautogui.write('9') 
+    pyautogui.write('9') # SEXUAL CHUMBADA (não trata violência sexual) # pergunta 56.4 
     pyautogui.press("tab")
-
-    # pergunta 56.5
-    pyautogui.write(campos.get('trafico_pessoas', '9')) 
+    pyautogui.write(campos['trafico_pessoas']) # pergunta 56.5
     pyautogui.press("tab")
-
-    # pergunta 56.6
-    pyautogui.write(campos.get('financeiro', '9')) 
+    pyautogui.write(campos['financeiro']) # pergunta 56.6
     pyautogui.press("tab")
-
-    # pergunta 56.7
-    pyautogui.write(campos.get('negligencia_abandono', '9')) 
+    pyautogui.write(campos['negligencia_abandono']) # pergunta 56.7
     pyautogui.press("tab")
-
-    # pergunta 56.8
-    pyautogui.write(campos.get('trabalho_infantil', '9')) 
+    pyautogui.write(campos['trabalho_infantil']) # pergunta 56.8
     pyautogui.press("tab")
-
-    # pergunta 56.9
-    pyautogui.write(campos.get('intervencao_legal', '9')) 
+    pyautogui.write(campos['intervencao_legal']) # pergunta 56.9
     pyautogui.press("tab")
-
-    # pergunta 56.10
-    pyautogui.write(campos.get('outro_tipo_violencia', '9')) 
+    pyautogui.write(campos['outro_tipo_violencia'])  # pergunta 56.10
     pyautogui.press("tab")
-
-    # Pergunta 56.10.1 (Somente se 'outro_tipo_violencia' for "1")
-    if campos.get('outro_tipo_violencia') == "1": 
-        # Para o campo de especificação, não se aplica a regra '9', pois ele só é preenchido se o campo anterior for '1'.
-        # Aqui, garantimos que se o campo de especificação estiver ausente, ele não cause erro.
-        pyautogui.write(campos.get('esp_outro_tipo_violencia', ''))
+    if campos.get('outro_tipo_violencia') == "1": # pergunta 56.10.1
+        pyautogui.write(campos['esp_outro_tipo_violencia'])
         pyautogui.press("tab")
-    
-    # Bloco Meio de Agressão (Perguntas 57.1 a 57.8)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-
-    # pergunta 57.1
-    pyautogui.write(campos.get('forca_corporal_espancamento', '9')) 
+    pyautogui.write(campos['forca_corporal_espancamento']) # pergunta 57.1
     pyautogui.press("tab")
-
-    # pergunta 57.2
-    pyautogui.write(campos.get('enforcamento', '9')) 
+    pyautogui.write(campos['enforcamento']) # pergunta 57.2
     pyautogui.press("tab")
-
-    # pergunta 57.3
-    pyautogui.write(campos.get('objeto_contundente', '9')) 
+    pyautogui.write(campos['objeto_contundente']) # pergunta 57.3
     pyautogui.press("tab")
-
-    # pergunta 57.4
-    pyautogui.write(campos.get('objeto_perfurante', '9')) 
+    pyautogui.write(campos['objeto_perfurante']) # pergunta 57.4
     pyautogui.press("tab")
-
-    # pergunta 57.5
-    pyautogui.write(campos.get('objeto_quente', '9')) 
+    pyautogui.write(campos['objeto_quente']) # pergunta 57.5
     pyautogui.press("tab")
-
-    # pergunta 57.6
-    pyautogui.write(campos.get('envenenamento', '9')) 
+    pyautogui.write(campos['envenenamento']) # pergunta 57.6
     pyautogui.press("tab")
-
-    # pergunta 57.7
-    pyautogui.write(campos.get('arma_fogo', '9')) 
+    pyautogui.write(campos['arma_fogo']) # pergunta 57.7
     pyautogui.press("tab")
-
-    # pergunta 57.8
-    pyautogui.write(campos.get('ameaca', '9')) 
+    pyautogui.write(campos['ameaca']) # pergunta 57.8
     pyautogui.press("tab")
    
    
@@ -907,86 +861,47 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     time.sleep(2.0)
     #numero de envolvidos 60
     # pergunta 60  # out_agres_vio
-    
-    # 1. Obter o valor, usando '9' como padrão se estiver vazio ou ausente ('')
-    valor_numero_envolvidos = campos.get('numero_envolvidos', '9') # pergunta 60  # out_agres_vio
+    valor_numero_envolvidos = campos.get('numero_envolvidos', '') 
     log_info(f"[Pergunta 60 ] NUmero de envolvidos: {valor_numero_envolvidos}")
-
-    # 2. Digitar o valor da variável que já tem o padrão '9'
-    pyautogui.write(valor_numero_envolvidos) 
+    pyautogui.write(campos['numero_envolvidos']) # pergunta 60
     pyautogui.press("tab")
+
     
-    # Relação com a Vítima (Perguntas 61.1 a 61.17)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-
-    # pergunta 61.1
-    pyautogui.write(campos.get('pai', '9')) 
+    
+    pyautogui.write(campos['pai']) # pergunta 61.1
     pyautogui.press("tab")
-
-    # pergunta 61.2
-    pyautogui.write(campos.get('mae', '9')) 
+    pyautogui.write(campos['mae'])  # pergunta 61.2
     pyautogui.press("tab")
-
-    # pergunta 61.3
-    pyautogui.write(campos.get('padrasto', '9')) 
+    pyautogui.write(campos['padrasto'])  # pergunta 61.3
     pyautogui.press("tab")
-
-    # pergunta 61.4
-    pyautogui.write(campos.get('madrasta', '9')) 
+    pyautogui.write(campos['madrasta'])  # pergunta 61.4
     pyautogui.press("tab")
-
-    # pergunta 61.5
-    pyautogui.write(campos.get('conjuge_parceiro', '9')) 
+    pyautogui.write(campos['conjuge_parceiro'])  # pergunta 61.5
     pyautogui.press("tab")
-
-    # pergunta 61.6
-    pyautogui.write(campos.get('ex_conjuge_parceiro', '9')) 
+    pyautogui.write(campos['ex_conjuge_parceiro'])  # pergunta 61.6
     pyautogui.press("tab")
-
-    # pergunta 61.7
-    pyautogui.write(campos.get('namorado', '9')) 
+    pyautogui.write(campos['namorado'])  # pergunta 61.7
     pyautogui.press("tab")
-
-    # pergunta 61.8
-    pyautogui.write(campos.get('ex_namorado', '9')) 
+    pyautogui.write(campos['ex_namorado']) # pergunta 61.8
     pyautogui.press("tab")
-
-    # pergunta 61.9
-    pyautogui.write(campos.get('filho', '9')) 
+    pyautogui.write(campos['filho']) # pergunta 61.9
     pyautogui.press("tab")
-
-    # pergunta 61.10
-    pyautogui.write(campos.get('irmao', '9')) 
+    pyautogui.write(campos['irmao']) # pergunta 61.10
     pyautogui.press("tab")
-
-    # pergunta 61.11
-    pyautogui.write(campos.get('amigos_conhecidos', '9')) 
+    pyautogui.write(campos['amigos_conhecidos']) # pergunta 61.11
     pyautogui.press("tab")
-
-    # pergunta 61.12
-    pyautogui.write(campos.get('desconhecido', '9')) 
+    pyautogui.write(campos['desconhecido']) # pergunta 61.12
     pyautogui.press("tab")
-
-    # pergunta 61.13
-    pyautogui.write(campos.get('cuidador', '9')) 
+    pyautogui.write(campos['cuidador']) # pergunta 61.13
     pyautogui.press("tab")
-
-    # pergunta 61.14
-    pyautogui.write(campos.get('patrao_chefe', '9')) 
+    pyautogui.write(campos['patrao_chefe']) # pergunta 61.14
     pyautogui.press("tab")
-
-    # pergunta 61.15
-    pyautogui.write(campos.get('pessoa_relacao_instituicao', '9')) 
+    pyautogui.write(campos['pessoa_relacao_instituicao']) # pergunta 61.15
     pyautogui.press("tab")
-
-    # pergunta 61.16
-    pyautogui.write(campos.get('policial_agente', '9')) 
+    pyautogui.write(campos['policial_agente']) # pergunta 61.16
     pyautogui.press("tab")
-
-    # pergunta 61.17
-    pyautogui.write(campos.get('propria_pessoa', '9')) 
+    pyautogui.write(campos['propria_pessoa'])   # pergunta 61.17
     pyautogui.press("tab")
-
     # Vim um if aqui para verificar a condição e preencher o campo de descrição se necessário
     
     outros_envolvidos_valor = campos.get('outros_envolvidos', '2') # pergunta 61.18
@@ -1002,87 +917,47 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
 
     log_debug("Preenchendo o campo 'sexo_agressor'.")
     time.sleep(1.5)
-
-    # Pergunta 62: Sexo do Agressor.
-    # A regra é aplicada aqui: se 'sexo_agressor' não estiver no dicionário 
-    # 'campos' ou for None/em branco (dependendo de como o .get() está configurado, 
-    # mas geralmente usando o valor padrão '9'), ele preencherá com '9'.
-    pyautogui.write(campos.get('sexo_agressor', '9'))
+    if campos.get('sexo_agressor'): # pergunta 62
+        pyautogui.write(campos['sexo_agressor'])
     pyautogui.press("tab") # Vai para o campo 'Suspeita de uso de álcool'
-    
-    # Pergunta 63: Suspeita de Uso de Álcool pelo Agressor
-    # Se 'suspeita_alcool' estiver ausente, .get() retornará '9', aplicando a regra.
-    pyautogui.write(campos.get('suspeita_alcool', '9')) 
+    pyautogui.write(campos['suspeita_alcool']) # pergunta 63
     pyautogui.press("tab")
-
-    # Pergunta 64: Ciclo de Vida do Autor/Agressor
-    # Se 'ciclo_vida_autor' estiver ausente, .get() retornará '9', aplicando a regra.
-    pyautogui.write(campos.get('ciclo_vida_autor', '9')) 
+    pyautogui.write(campos['ciclo_vida_autor']) # pergunta 64
     pyautogui.press("tab")
-
-    # Encaminhamentos (Perguntas 65.1 a 65.14)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-    # pergunta 65.1
-    pyautogui.write(campos.get('rede_saude', '9')) 
+    pyautogui.write(campos['rede_saude']) # pergunta 65.1
     pyautogui.press("tab")
-
-    # pergunta 65.2
-    pyautogui.write(campos.get('rede_assistencia_social', '9')) 
+    pyautogui.write(campos['rede_assistencia_social']) # pergunta 65.2
     pyautogui.press("tab")
-
-    # pergunta 65.3
-    pyautogui.write(campos.get('rede_educacao', '9')) 
+    pyautogui.write(campos['rede_educacao']) # pergunta 65.3
     pyautogui.press("tab")
-
-    # pergunta 65.4
-    pyautogui.write(campos.get('rede_atendimento_mulher', '9')) 
+    pyautogui.write(campos['rede_atendimento_mulher']) # pergunta 65.4
     pyautogui.press("tab")
-
-    # pergunta 65.5
-    pyautogui.write(campos.get('conselho_tutelar', '9')) 
+    pyautogui.write(campos['conselho_tutelar']) # pergunta 65.5
     pyautogui.press("tab")
-
-    # pergunta 65.6
-    pyautogui.write(campos.get('conselho_idoso', '9')) 
+    pyautogui.write(campos['conselho_idoso']) # pergunta 65.6
     pyautogui.press("tab")
-
-    # pergunta 65.7
-    pyautogui.write(campos.get('delegacia_atendimento_idoso', '9')) 
+    pyautogui.write(campos['delegacia_atendimento_idoso']) # pergunta 65.7
     pyautogui.press("tab")
-
-    # pergunta 65.8
-    pyautogui.write(campos.get('centro_ref_direitos_humanos', '9')) 
+    pyautogui.write(campos['centro_ref_direitos_humanos']) # pergunta 65.8
     pyautogui.press("tab")
-
-    # pergunta 65.9
-    pyautogui.write(campos.get('ministerio_publico', '9')) 
+    pyautogui.write(campos['ministerio_publico']) # pergunta 65.9
     pyautogui.press("tab")
-
-    # pergunta 65.10
-    pyautogui.write(campos.get('delegacia_especializada_infancia', '9')) 
+    pyautogui.write(campos['delegacia_especializada_infancia']) # pergunta 65.10
     pyautogui.press("tab")
-
-    # pergunta 65.11
-    pyautogui.write(campos.get('delegacia_atendimento_mulher', '9')) 
+    pyautogui.write(campos['delegacia_atendimento_mulher']) # pergunta 65.11
     pyautogui.press("tab")
-
-    # pergunta 65.12
-    pyautogui.write(campos.get('outras_delegacias', '9')) 
+    pyautogui.write(campos['outras_delegacias']) # pergunta 65.12
     pyautogui.press("tab")
-
-    # pergunta 65.13
-    pyautogui.write(campos.get('justica_infancia_juventude', '9')) 
+    pyautogui.write(campos['justica_infancia_juventude']) # pergunta 65.13
     pyautogui.press("tab")
-
-    # pergunta 65.14
-    pyautogui.write(campos.get('defensoria_publica', '9')) 
+    pyautogui.write(campos['defensoria_publica']) # pergunta 65.14
     pyautogui.press("tab")
     
     if campos.get('relacao_trabalho'): # pergunta 66 #se não vier nada colocar 9
         pyautogui.write(campos['relacao_trabalho']) 
     pyautogui.press("tab", presses=2)
     
-    if campos.get('relacao_trabalho') == "1": 
+    if campos.get('relacao_trabalho') == "1":
         pyautogui.write('9') # OUTROS (não retorna CAT)
         pyautogui.press("tab")
     

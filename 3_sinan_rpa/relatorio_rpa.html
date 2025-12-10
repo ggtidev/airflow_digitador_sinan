@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório RPA - Notificações</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #controls {
+            margin-bottom: 20px;
+        }
+        #loadDataBtn, #exportPdfBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #loadDataBtn {
+            background-color: #007bff;
+            color: white;
+        }
+        #exportPdfBtn {
+            background-color: #dc3545; /* Vermelho para PDF */
+            color: white;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /* CLASSES DE COR CONFORME SOLICITADO */
+        .status-erro-digitacao {
+            background-color: #ffcccc; /* Vermelho Claro */
+            color: #d9534f;           /* Vermelho Escuro */
+            font-weight: bold;
+        }
+        .status-erro {
+            background-color: #ffe0b2; /* Laranja Claro */
+            color: #ff9800;           /* Laranja Escuro */
+            font-weight: bold;
+        }
+        .status-concluido {
+            background-color: #d4edda; /* Verde Claro */
+            color: #28a745;           /* Verde Escuro */
+            font-weight: bold;
+        }
+        .status-pendente {
+            background-color: #fff3cd; /* Amarelo Claro */
+            color: #ffc107;           /* Amarelo Escuro */
+            font-weight: bold;
+        }
+        .status-default {
+            background-color: #f8f9fa; /* Cinza Claro (Para outros status) */
+        }
+
+        /* Estilos de impressão para o PDF (opcional, mas recomendado) */
+        @media print {
+            #controls {
+                display: none;
+            }
+            .status-erro-digitacao, .status-erro, .status-concluido, .status-pendente {
+                /* Garante que o texto preto seja legível mesmo sem cores de fundo no PDF */
+                color: black !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Relatório de Notificações RPA</h1>
+    
+    <div id="controls">
+        <button id="loadDataBtn">Carregar Dados da Tabela rpa_notificacoes</button>
+        <button id="exportPdfBtn" disabled>Exportar para PDF</button>
+    </div>
+
+    <div id="contentToExport">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>num_notificacao</th>
+                    <th>record (Id RedCap)</th> <th>status</th>
+                    <th>agravo_id</th>           </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('loadDataBtn').addEventListener('click', loadData);
+        document.getElementById('exportPdfBtn').addEventListener('click', generatePDF);
+
+        const pdfButton = document.getElementById('exportPdfBtn');
+
+        async function loadData() {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '<tr><td colspan="5">Carregando dados...</td></tr>';
+            pdfButton.disabled = true; // Desabilita o PDF enquanto carrega
+
+            try {
+                // A URL está correta: http://127.0.0.1:5000/api/notificacoes
+                const response = await fetch('http://127.0.0.1:5000/api/notificacoes');
+                
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // Limpa o corpo da tabela
+                tbody.innerHTML = ''; 
+
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    const statusValue = row.status ? row.status.toLowerCase().trim() : '';
+                    let statusClass = 'status-default';
+
+                    // 1. Define a classe CSS baseada no valor do status
+                    if (statusValue === 'erro_digitacao') {
+                        statusClass = 'status-erro-digitacao';
+                    } else if (statusValue === 'erro') {
+                        statusClass = 'status-erro';
+                    } else if (statusValue === 'concluido') {
+                        statusClass = 'status-concluido';
+                    } else if (statusValue === 'pendente') {
+                        statusClass = 'status-pendente';
+                    }
+
+                    // 2. CORREÇÃO: Usa os nomes reais das colunas (record, agravo_id) 
+                    // Isso evita o erro 'undefined' e alinha-se à consulta SQL corrigida no Backend.
+                    tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.num_notificacao}</td>
+                        <td>${row.record}</td> 
+                        <td class="${statusClass}">${row.status}</td>
+                        <td>${row.agravo_id}</td>
+                    `;
+                    
+                    tbody.appendChild(tr);
+                });
+
+                pdfButton.disabled = false; // Habilita o PDF após carregar com sucesso
+
+            } catch (error) {
+                console.error("Falha ao carregar os dados:", error);
+                tbody.innerHTML = `<tr><td colspan="5" style="color: red;">Erro ao carregar dados: ${error.message}. Verifique o Backend.</td></tr>`;
+                pdfButton.disabled = true; // Mantém desabilitado em caso de falha
+            }
+        }
+
+        // --- FUNÇÃO PARA EXPORTAR PDF ---
+        function generatePDF() {
+            const element = document.getElementById('contentToExport');
+            const options = {
+                margin: 10,
+                filename: 'relatorio_rpa_notificacoes.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } // Orientação paisagem para caber a tabela
+            };
+
+            // Usa a biblioteca html2pdf.js
+            html2pdf().set(options).from(element).save();
+        }
+    </script>
+
+</body>
+</html>

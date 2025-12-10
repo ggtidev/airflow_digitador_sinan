@@ -85,8 +85,8 @@ def map_to_rpa_format(raw_data):
         "un_not_vio": "unidade_notificadora",
         "nm_notif_vio": "nome_notificador",
         "idade_calc_vio": "idade_calculada_notificador",
-        "us_vio": "nome_unidade_saude",
-        "nm_un_vio": "nome_unidade_notificadora",
+        "us_vio": "nome_unidade_saude", # Nome da unidade de saúde
+        "nm_un_vio": "nome_unidade_notificadora", # Nome da unidade notificadora
     }
 
     # Dicionário que mapeia os campos originais (chaves) para os novos nomes
