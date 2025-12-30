@@ -75,7 +75,7 @@ keyboard==0.13.5
 # ============================================================
 
 mss==9.0.1
-python-mss
+# python-mss foi removido pois causa erro de distribuição em Python 3.13.
 
 # (Nota: no pip o pacote chama-se 'python-mss', mas no código usa-se 'import mss')
 

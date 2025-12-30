@@ -126,8 +126,11 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     time.sleep(2)
     pyautogui.write(campos['data_ocorrencia'])
     pyautogui.press("tab")
-    pyautogui.write(campos['nome_paciente'])
+    
+    #Bloco Notificação Indivídual
+    pyautogui.write(campos['nome_paciente']) # pergunta 10
     pyautogui.press("tab")
+   
     idade = 0
     if campos.get('data_nascimento_completa'):
         pyautogui.write(campos['data_nascimento_completa'])
@@ -140,23 +143,30 @@ def preencher_bloco_notificacao(campos, num_notificacao):
         pyautogui.press("tab")
         pyautogui.write("4")
         pyautogui.press("tab")
+   
     pyautogui.write(campos['sexo'])
     pyautogui.press("tab")
+   
     if campos['sexo'].upper() == "F" and idade >= 11:
         pyautogui.write(campos.get('gestante', '9')) # Adicionado valor padrão '9'
     pyautogui.press("tab")
+   
     if campos.get('raca'):
         pyautogui.write(campos['raca'])
     pyautogui.press("tab")
+    
     if idade >= 7 and campos.get('escolaridade'):
         pyautogui.write(campos['escolaridade'])
     pyautogui.press("tab")
+    
     if campos.get('cartao_sus'):
         pyautogui.write(campos['cartao_sus'])
     pyautogui.press("tab")
-    if campos.get('nome_mae'):
-        pyautogui.write(campos['nome_mae'])
+    if campos.get('nome_mae'): # pergunta 18
+        pyautogui.write(campos['nome_mae']) 
     pyautogui.press("tab")
+     # Fim Bloco Notificação Indivídual
+
     pyautogui.write(campos['uf_residencia_vio'])
     pyautogui.press("tab")
     pyautogui.write(campos['municipio_residencia'])
@@ -321,12 +331,18 @@ def preencher_bloco_investigacao(campos, idade):
     pyautogui.press("tab")
     pyautogui.write(campos['ameaca'])
     pyautogui.press("tab")
+    
     pyautogui.write(campos['outro_meio_agressao'])
     pyautogui.press("tab")
+    
     if campos.get('outro_meio_agressao') == "1":
         pyautogui.write(campos['esp_outro_meio_agressao'])
         pyautogui.press("tab")
     time.sleep(2.0)
+    
+    
+    
+    
     pyautogui.write(campos['numero_envolvidos'])
     pyautogui.press("tab")
     pyautogui.write(campos['pai'])

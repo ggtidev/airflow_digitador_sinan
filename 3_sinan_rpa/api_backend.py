@@ -42,7 +42,7 @@ def get_notificacoes():
     try:
         # CORREÇÃO CRÍTICA: Qualificar o nome da tabela com o esquema 'sinan_api'
         # O DBeaver mostra que a tabela está em 'sinan_api.rpa_notificacoes'
-        sql_query = text("SELECT id, num_notificacao, record, status, agravo_id FROM rpa_notificacoes;")
+        sql_query = text("SELECT id, num_notificacao, record, status, agravo_id FROM rpa_notificacoes order by id asc;")
         
         # Abre uma conexão e executa a consulta
         with engine.connect() as connection:

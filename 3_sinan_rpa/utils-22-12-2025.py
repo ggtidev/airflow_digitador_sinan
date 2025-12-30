@@ -1,8 +1,8 @@
-# ====
+# ==========================================================
 # File: utils.py (VERSÃO ROBUSTA COM FALLBACK)
 # Autor: André Bezerra
 # Data: 24/11/2025
-# ====
+# ==========================================================
 
 import pyautogui
 import time
@@ -37,9 +37,9 @@ NAO_IMG = os.path.join(IMAGENS_RPA_DIR, "nao.png")
 
 os.makedirs(PASTA_ERROS, exist_ok=True)
 
-# ====
+# ==========================================================
 # FUNÇÃO NOVA: MONITORAMENTO DE RECURSOS (CPU/RAM)
-# ====
+# ==========================================================
 def monitorar_recursos():
     """
     Captura e loga o uso atual de CPU e Memória RAM.
@@ -65,9 +65,9 @@ def monitorar_recursos():
     except Exception as e:
         log_erro(f"Erro ao monitorar recursos do sistema: {e}")
         
-# ====
+# ==========================================================
 # FUNÇÕES AUXILIARES (Dados, Mouse, Sincronização)
-# ====
+# ==========================================================
 
 def load_json(filepath):
     with open(filepath, 'r', encoding='utf-8') as file:
@@ -115,9 +115,9 @@ def calcular_idade_formatada(data_nascimento_str: str) -> int:
     except Exception:
         return 0
 
-# ====
+# ==========================================================
 # FUNÇÃO DE ABERTURA DO AGRAVO (MANTIDA)
-# ====
+# ==========================================================
 
 def selecionar_agravo_atual(nome_agravo: str):
     """
@@ -133,9 +133,9 @@ def selecionar_agravo_atual(nome_agravo: str):
     log_info("Tela de Notificação Individual reaberta.")
 
 
-# ====
+# ==========================================================
 # FUNÇÃO DE LOCALIZAÇÃO DE TEMPLATE (MANTIDA)
-# ====
+# ==========================================================
 
 def localizar_template_rapido_pos(template_path, confidence=0.8):
     """
@@ -162,9 +162,9 @@ def localizar_template_rapido_pos(template_path, confidence=0.8):
     return None
 
 
-# ====
+# ==========================================================
 # FUNÇÃO DE FECHAMENTO DE TELA DE ERRO (MANTIDA)
-# ====
+# ==========================================================
 
 def fechar_tela_erro():
     """
@@ -206,82 +206,9 @@ def fechar_tela_erro():
         log_debug("   ⚠️ Botão 'Não' não encontrado. Nenhuma alteração descartada.")
 
 
-# ====
-# FUNÇÃO DE TRATAMENTO DE ERRO PARA UNIDADE NOTIFICADORA (P06)
-# ====
-
-def tratar_erro_unidade_notificadora(num_notificacao: str, agravo: str, unidade_notificadora: str):
-    """
-    Trata erro específico quando a Unidade Notificadora (P06) tem valor 2, 3, 4, 5 ou 6.
-    
-    Fluxo:
-    1. Para a digitação
-    2. Clica em SAIR da notificação atual
-    3. Clica em NÃO (descartar alterações)
-    4. Reabre a ficha (preparação para o próximo item da fila)
-    5. Registra o erro na API
-    6. Interrompe o fluxo levantando uma exceção
-    
-    Args:
-        num_notificacao (str): Número da notificação atual
-        agravo (str): Nome do agravo (ex: "%VIOLENC%")
-        unidade_notificadora (str): Valor da Unidade Notificadora que causou o erro
-    """
-    log_erro(f"🚨 [ERRO-UNIDADE-P06] Unidade Notificadora '{unidade_notificadora}' não permitida para este fluxo.")
-    log_info(f"Iniciando tratamento de erro para Unidade Notificadora (P06) = '{unidade_notificadora}'")
-    
-    # 1. SCREENSHOT DO ERRO
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    screenshot_filename = f"erro_unidade_p06_{num_notificacao}_{unidade_notificadora}_{timestamp}.png"
-    screenshot_path = os.path.join(PASTA_ERROS, screenshot_filename)
-    pyautogui.screenshot(screenshot_path)
-    log_info(f"📸 Screenshot salva em: {screenshot_path}")
-    
-    # 2. PARAR A DIGITAÇÃO E SAIR DA NOTIFICAÇÃO ATUAL
-    log_info("🛑 Parando digitação e saindo da notificação atual...")
-    
-    # Procura e clica no botão SAIR
-    sair = pyautogui.locateCenterOnScreen(SAIR_IMG, confidence=0.8)
-    if sair:
-        pyautogui.click(sair)
-        log_info("   ✅ Botão 'Sair' clicado.")
-        time.sleep(1)
-    else:
-        log_erro("   ⚠️ Botão 'Sair' não encontrado. Tentando ESC...")
-        pyautogui.press('esc')
-        time.sleep(1)
-    
-    # 3. CLICA EM NÃO (DESCARTAR ALTERAÇÕES)
-    nao = pyautogui.locateCenterOnScreen(NAO_IMG, confidence=0.8)
-    if nao:
-        pyautogui.click(nao)
-        log_info("   ✅ Botão 'Não' clicado (alterações descartadas).")
-        time.sleep(1)
-    else:
-        log_erro("   ⚠️ Botão 'Não' não encontrado.")
-    
-    # 4. REABERTURA DA FICHA (PREPARAÇÃO PARA O PRÓXIMO ITEM DA FILA)
-    log_info("🔄 Reabrindo ficha para o próximo item da fila...")
-    pyautogui.click(x=395, y=229)
-    log_info("   🖱️ Clique fixo em (395, 229) para focar na tela de notificação individual.")
-    
-    pyautogui.press('enter', presses=2, interval=0.5)
-    time.sleep(3)
-    log_info("   ✅ Nova notificação aberta. Tela pronta para o próximo item.")
-    
-    # 5. REGISTRA O ERRO NA API
-    registrar_erro(num_notificacao)
-    log_info(f"📝 Status da notificação {num_notificacao} atualizado para 'erro_digitacao' na API.")
-    
-    # 6. INTERROMPE O FLUXO LEVANTANDO UMA EXCEÇÃO
-    mensagem_erro = f"Unidade Notificadora (P06) = '{unidade_notificadora}' não permitida. Valores aceitos: 1 ou 7."
-    log_erro(f"❌ {mensagem_erro}")
-    raise Exception(mensagem_erro)
-
-
-# ====
+# ==========================================================
 # FUNÇÃO PRINCIPAL DE VERIFICAÇÃO E TRATAMENTO DE ERRO (NOVA LÓGICA)
-# ====
+# ==========================================================
 
 def _executar_tratamento_completo(num_notificacao, template, metodo_deteccao):
     """
@@ -321,8 +248,7 @@ def verificar_e_tratar_erro(num_notificacao: str, agravo: str):
             'erro-06-opcao-invalida.png','erro-07-atencao_uf.png', 'erro-07-atencao_uf.jpg','erro-08-atencao_so_recebe_valores_numericos.png',
             'erro-10-dt_nascimento_ou_idade_obrigatorio.png','erro-11-dt_invalida.png','erro-12-idade_inferior_ou_superior.png','erro-12-_idade_inferior_ou_superior.jpg',
             'erro-14-_data_encerramento_deve_ser_maior_igual_data_notificacao.jpg',
-            'erro-15-categoria_nao_permitida.jpg','erro-17-_unidade_notificadora_preenchimento_obrigatorio.jpg'
-            'erro-18-_notificacao_ja_cadastrada.jpg'
+            'erro-15-categoria_nao_permitida.jpg'
         ]
     ]
 

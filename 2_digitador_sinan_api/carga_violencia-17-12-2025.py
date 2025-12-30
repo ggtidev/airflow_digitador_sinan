@@ -13,8 +13,8 @@ Descrição:
       - Geração de um arquivo de log com data/hora, erros e resumo final.
 
 Autor: André ROdovalho / Minsait - Saúde Digital
-Última atualização: 18/12/2025
-Versão: 2.4
+Última atualização: 27/10/2025
+Versão: 2.2
 """
 
 # --- 1. IMPORTAÇÕES ---
@@ -168,48 +168,21 @@ with open(log_path, "w", encoding="utf-8") as log_file:
 
         campos_faltando = []
 
-        # ==========================================================
-        # NOVA REGRA: Consistência entre Data de Encerramento e Notificação
-        # ==========================================================
-        # Captura as strings das datas - CORREÇÃO: dt_encerra_viole
-        dt_not_str = obter_valor(campos_presentes, 'dt_not_vio', 'data_notificacao')
-        dt_enc_str = obter_valor(campos_presentes, 'dt_encerra_viole', 'data_encerramento')
-
-        # Comparação para evitar erro de validação do SINAN
-        if dt_not_str and dt_enc_str:
-            try:
-                fmt = "%Y-%m-%d"
-                dt_not_obj = datetime.strptime(dt_not_str, fmt)
-                dt_enc_obj = datetime.strptime(dt_enc_str, fmt)
-
-                # Se 'data_encerramento' for menor que 'data_notificacao', usar 'data_notificacao'
-                if dt_enc_obj < dt_not_obj:
-                    print(f"[REGRAS] Record {record} -> Encerramento ({dt_enc_str}) < Notificação ({dt_not_str}). Ajustando...")
-                    
-                    # Atualiza o valor na lista original 'dados' para persistência correta
-                    for item in dados:
-                        # CORREÇÃO: Verificando o nome correto dt_encerra_viole
-                        if item["field_name"].strip().lower() in ['dt_encerra_viole', 'data_encerramento']:
-                            item["value"] = dt_not_str
-                            # Atualiza também o dicionário local de validação
-                            campos_presentes[item["field_name"].strip().lower()] = dt_not_str
-            except ValueError:
-                # Caso as datas não estejam no formato esperado para conversão
-                pass
-
         # --- REGRA 07: Verificação dos 5 campos principais ---
         campos_principais = [
             ('dt_not_vio', 'data_notificacao'),
             ('uf_notif_vio', 'uf_notificacao_vio'),
             ('mun_notif_vio', 'mun_notificacao_vio'),
             # Os campos de unidade (un_not_vio, us_vio) são validados abaixo na REGRA 1 (MODIFICADA)
+            # ('un_not_vio', 'unidade_notificadora'),
+            # ('us_vio', 'nome_unidade_saude')
         ]
         
         # Validação dos campos principais (exceto os de unidade)
         for aliases in campos_principais:
             valor = obter_valor(campos_presentes, *aliases)
             if not valor:
-                campos_faltando.append(aliases[0])
+                campos_faltando.append(aliases[0]) # COLOCAR UM TEXTO
 
         # --- REGRAS EXISTENTES DE NEGÓCIO ---
 
@@ -218,42 +191,79 @@ with open(log_path, "w", encoding="utf-8") as log_file:
         if mun_val and mun_val.strip().upper() != "RECIFE":
             campos_faltando.append("mun_notif_vio (deve ser 'RECIFE')")
 
-        # --- REGRA 1 (NOVA): Validação unificada de unidade notificadora ---
+        # REGRA 02: Unidade notificadora deve ser "01" ou "7" 
+        # --------------  
+        # REGRA 02: Unidade notificadora e nome da unidade (REGRAS 2.1 e 2.2)
+
+        # ==========================================================
+        # REGRA 02 e 03 — Unidade notificadora e nome da unidade (MODIFICADAS)
+        # ==========================================================
+
+        # --- REGRA 1 (NOVA): Validação unificada (un_not_vio, us_vio, nm_un_vio) ---
         # O erro só ocorre se TODOS os 3 campos (ou seus aliases) estiverem vazios.
+        
         un_val = obter_valor(campos_presentes, 'un_not_vio', 'unidade_notificadora')
         us_val_us = obter_valor(campos_presentes, 'us_vio', 'nome_unidade_saude')
         us_val_nm = obter_valor(campos_presentes, 'nm_un_vio')
 
         if not un_val and not us_val_us and not us_val_nm:
-             campos_faltando.append("un_not_vio, us_vio, nm_un_vio (unidade ausente)")
+             campos_faltando.append(
+                "un_not_vio, us_vio, nm_un_vio (Todos os 3 campos de unidade estão ausentes ou vazios)"
+            )
 
         # --- REGRA 2.1: Ajuste do código de unidade notificadora (Transformação) ---
+        # A lógica de validação foi movida para cima (REGRA 1).
+        # Aqui mantemos apenas a lógica de *transformação* (ajuste para '7').
         un_val_final = None
         if un_val is not None:
             un_val_strip = str(un_val).strip()
+            print(f"[DEBUG] Record {record} → un_not_vio recebido do REDCAP: '{un_val_strip}'")
+
             # Se for diferente de 1, força o valor a 7
             if un_val_strip == "1":
                 un_val_final = "1"
             else:
                 un_val_final = "7"
-        
+                print(f"[DEBUG] Record {record} → un_not_vio ajustado/interpretado como '7' (original: '{un_val_strip}')")
+        else:
+             print(f"[DEBUG] Record {record} → un_not_vio ausente ou nulo (Validação pela REGRA 1)")
+             # A validação de 'campo obrigatório' foi removida daqui
+
         # --- REGRA 2.2: Determina a origem do nome da unidade de saúde ---
+        # Esta lógica é mantida para fins de debug e processamento futuro, 
+        # embora a *validação* (REGRA 03) tenha sido simplificada (REGRA 1).
         us_val = None
         origem_nome = ""
 
+        # Usamos o un_val_final (transformado)
         if un_val_final in ["2", "3", "4", "6", "7"]:
-            us_val = us_val_nm
+            us_val = us_val_nm # Reutiliza o valor já buscado
             origem_nome = "nm_un_vio"
         elif un_val_final in ["1", "5"]:
-            us_val = us_val_us
+            us_val = us_val_us # Reutiliza o valor já buscado
             origem_nome = "us_vio / nome_unidade_saude"
         else:
+            # Se un_val_final for None (pois un_val era None), 
+            # tentamos 'adivinhar' a origem com base no que foi preenchido.
             if us_val_us:
                 origem_nome = "us_vio / nome_unidade_saude (un_not_vio ausente)"
                 us_val = us_val_us
             elif us_val_nm:
                 origem_nome = "nm_un_vio (un_not_vio ausente)"
                 us_val = us_val_nm
+            else:
+                origem_nome = "desconhecida (todos vazios)"
+
+        print(f"[DEBUG] Record {record} → Origem da unidade: {origem_nome} | Valor: '{us_val}'")
+
+        # --- REGRA 03: Validação do nome da unidade (Substituída pela REGRA 1) ---
+        # A lógica de validação 'isalnum' foi removida (Regra 2),
+        # e a lógica de obrigatoriedade foi movida para a REGRA 1.
+        # Este bloco fica vazio ou apenas com o debug final.
+        print(f"[DEBUG] Record {record} → Valor 'us_vio' (alias): '{us_val_us}' | Valor 'nm_un_vio': '{us_val_nm}'")
+
+
+
 
         # --- DEFINIÇÃO DO STATUS FINAL ---
         status_final = "erro" if campos_faltando else "pendente"
@@ -264,10 +274,9 @@ with open(log_path, "w", encoding="utf-8") as log_file:
             log_file.write(f"[ERRO] Record {record}: Campos ausentes ou inválidos -> {', '.join(campos_faltando)}\n")
         else:
             total_pendentes += 1
-            log_file.write(f"[OK] Record {record}: Validado com sucesso.\n")
+            log_file.write(f"[OK] Record {record}: Todos os campos principais preenchidos corretamente.\n")
 
-        # --- INSERÇÃO NO BANCO DE DESTINO (PostgreSQL) ---
-        # Gera um número de notificação aleatório para o RPA processar
+        # --- INSERÇÃO NO BANCO DE DESTINO ---
         num_notificacao = str(random.randint(1000000, 9999999))
         notificacao = RpaNotificacao(
             record=record,
@@ -276,9 +285,9 @@ with open(log_path, "w", encoding="utf-8") as log_file:
             agravo_id=agravo.id
         )
         session.add(notificacao)
-        session.flush() # Obtém o ID da notificação para os detalhes
+        session.flush()
 
-        # Insere os detalhes da notificação (chave/valor) para o Robô digitar
+        # Insere detalhes
         for dado in dados:
             detalhe = RpaNotificacaoDetalhe(
                 rpa_notificacao_id=notificacao.id,
@@ -301,14 +310,12 @@ print(f"Validação concluída. Log salvo em: {log_path}")
 
 # --- 8. FINALIZAÇÃO ---
 try:
-    # Confirma todas as transações no banco de destino
     session.commit()
     print("Carga de dados finalizada com sucesso!")
 except Exception as e:
     print(f"Ocorreu um erro ao commitar as alterações: {e}")
     session.rollback()
 finally:
-    # Fecha as conexões de forma segura
     print("Fechando conexões com os bancos de dados.")
     conector_conn.close()
     session.close()

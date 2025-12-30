@@ -50,7 +50,7 @@ def executar_violencia(item, reaproveitar_sessao=False, tem_proxima=False):
         #idade = 0 
         #erro_encontrado = False
         #lista_pendencias = []
-    # ----
+    # -----------------------------------------
     num_notificacao = item.get("num_notificacao")
     agravo_nome = "%VIOLENC%" # Agravo que está sendo digitado
     try:
@@ -58,7 +58,7 @@ def executar_violencia(item, reaproveitar_sessao=False, tem_proxima=False):
         # Chama a função para logar o uso de CPU e RAM no início de cada execução
         # Isso ajuda a identificar se travamentos são causados por falta de memória
         monitorar_recursos() 
-        # ----
+        # ---------------------------------------
         if not reaproveitar_sessao:
             abrir_sinan()
             username, password = get_usuario_ativo()
@@ -196,17 +196,6 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     pyautogui.write(campos['data_notificacao']) # Pergunta 03
     pyautogui.press("tab", presses=3)
     
-    # --- VALIDAÇÃO CONDICIONAL DA UNIDADE NOTIFICADORA (P06) ---
-    # Se o valor for == 2, 3, 4, 5 ou 6: Chama verificar_e_tratar_erro() para validar se há erro na tela do SINAN
-    unidade_notificadora = campos.get('unidade_notificadora', '')
-    if unidade_notificadora in ['2', '3', '4', '5', '6']:
-        log_info(f"[REGRA-UNIDADE] Unidade Notificadora '{unidade_notificadora}' requer validação imediata de erro.")
-        if verificar_e_tratar_erro(num_notificacao, "%VIOLENC%"):
-            raise Exception(f"Erro de validação automática após detectar Unidade Notificadora inválida para este fluxo (Valor: {unidade_notificadora}).")
-    else:
-        log_info(f"[REGRA-UNIDADE] Unidade Notificadora '{unidade_notificadora}' permitida, seguindo fluxo normalmente.") 
-    # Se o valor for = 1 ou 7: Segue o fluxo normal sem validação adicional
-    
     pyautogui.write(campos['unidade_notificadora']) # Pergunta 06
     log_debug(f"[P-06] - Valor recebido para Unidade Notificadora: {campos.get('unidade_notificadora', '')}")
     pyautogui.press("tab")
@@ -217,10 +206,19 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     log_debug(f"[P-08.1] (us_vio) - Nome da Unidade de Saúde: {campos.get('nome_unidade_saude')}")
     log_debug(f"[P-08.1] (nm_un_vio)- Nome da Unidade Notificadora: {campos.get('nome_unidade_notificadora')}")
     log_debug(f"[P-08] - Valor recebido para Unidade Notificadora: {campos.get('unidade_notificadora', '')}")
+   
+    # --- NOVA REGRA --- Validação da Unidade Notificadora baseada na Pergunta 06
+    unidade_notificadora = campos.get('unidade_notificadora', '')
+    if unidade_notificadora in ['2', '3', '4', '5', '6']:
+        log_info(f"[REGRA-UNIDADE] Unidade Notificadora '{unidade_notificadora}' requer validação imediata de erro.")
+        if verificar_e_tratar_erro(num_notificacao, "%VIOLENC%"):
+            raise Exception(f"Erro de validação automática após detectar Unidade Notificadora inválida para este fluxo (Valor: {unidade_notificadora}).")
+    else:
+        log_info(f"[REGRA-UNIDADE] Unidade Notificadora '{unidade_notificadora}' permitida, seguindo fluxo normalmente.")
 
 
 
-    # ====
+    # ==============================================
     # Campo: Unidade Notificadora
     #
     # Valores possíveis:
@@ -245,25 +243,15 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     #
     # Observação:
     # Caso o valor seja "7" (Outros), o sistema preenche o nome informado manualmente.
-    # ====
+    # ==============================================
     
-    # ====
+    # ==============================================
     # Campo: Unidade Notificadora (P6)
     #
     # Mapeamento de percurso do sistema:
     # Caso o valor seja "7" (Outros), o sistema preenche o nome informado manualmente (P7).
     # Caso seja "1" (Unidade de Saúde), o sistema preenche o nome da unidade (P8).
-    # ====
-    
-    # --- VALIDAÇÃO CONDICIONAL ANTES DE PREENCHER P06 ---
-    # Se P06 for 2, 3, 4, 5 ou 6: Dar TAB duas vezes e verificar erro
-    if campos['unidade_notificadora'] in {"2", "3", "4", "5", "6"}:
-        # Dar tab duas vezes para ir para o campo Codigo Unidade
-        pyautogui.press("tab", presses=2)
-        if verificar_e_tratar_erro(num_notificacao, "%VIOLENC%"):
-            log_erro(f"ERRO DE VALIDAÇÃO DETECTADO após Pergunta 06 - Unidade Notificadora")
-            raise Exception(f"Erro de digitação em Pergunta 06 - Unidade Notificadora. Interrupção forçada.")
-    # Se P06 for 1 ou 7: Segue o fluxo normal
+    # ==============================================
     
     nome_da_unidade_bruto = "" # Variável para armazenar o nome bruto para comparação
     nome_campo_destino = ""    # Variável para armazenar o nome formatado para digitação (se não for especial)
@@ -292,10 +280,10 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     nome_para_comparacao = nome_da_unidade_bruto.upper().strip()    
     
     # 3. Lógica de SUBSTITUIÇÃO pelo CNES (SHORTCUT)
-    log_debug("---Iniciando lógica de substituição por CNES (se aplicável).----")
+    log_debug("---Iniciando lógica de substituição por CNES (se aplicável).--------")
     log_debug(f"Nome da Unidade de Saúde (Para Comparação): {nome_para_comparacao}")
     log_debug(f"[P-08.1] (us_vio) - Nome da Unidade de Saúde: {campos.get('nome_unidade_saude')}")
-    log_debug("---FINALIZANDO lógica de substituição por CNES (se aplicável).----")
+    log_debug("---FINALIZANDO lógica de substituição por CNES (se aplicável).--------")
     if nome_para_comparacao in UNIDADES_ESPECIAIS_CNES:
         
         # REGRA 1: Unidade Especial (Usa CNES fixo)
@@ -377,9 +365,9 @@ def preencher_bloco_notificacao(campos, num_notificacao):
 
 
     
-  # ====
+  # ================================
     # BLOCO NOTIFICAÇÃO INDIVIDUAL
-    # ====
+    # ================================
 
     # (1) Pergunta 10 - Nome do Paciente
     pyautogui.write(campos['nome_paciente'])
@@ -428,10 +416,10 @@ def preencher_bloco_notificacao(campos, num_notificacao):
         pyautogui.write(campos['raca'])
     pyautogui.press("tab")
 
-    # ----
+    # ------------------------------------------------
     # (7) Pergunta 16 - Escolaridade
     # REGRA 01 APLICADA AQUI
-    # ----
+    # ------------------------------------------------
 
     # --- INÍCIO DA NOVA LÓGICA DE MAPEAMENTO (ESCOLARIDADE) ---
     # Vamos ter que Comparar a idade dele com a escolaridade...
@@ -495,9 +483,9 @@ def preencher_bloco_notificacao(campos, num_notificacao):
         log_debug("[Pergunta-18] Nome da mãe não informado ou em branco.")
     pyautogui.press("tab")
 
-    # ====
+    # ================================
     # FIM BLOCO NOTIFICAÇÃO INDIVIDUAL
-    # ====
+    # ================================
 
 
 
@@ -968,7 +956,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         # (2) Preencher o campo P57.9
         pyautogui.write(valor_outro_meio)
         log_info(f"[P57.9] Valor preenchido: {valor_outro_meio}")
-        log_info("[P57.9] Igual a '1' [Entrou no IF]")
+        log_info("P57.9 Igual a '1' [Entrou no IF]")
 
         # (3) Avançar para o campo de especificação (P57.10)
         pyautogui.press("tab")
@@ -991,21 +979,18 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         # (6) Avançar para o campo 60 (somente 1 TAB)
         pyautogui.press("tab")
         pyautogui.click(x=694, y=507) # Click para garantir o foco correto (Primeira execução detectada: Realizando clique de ajuste em (671, 505). o sistema tem um erro de foco, que apos o TAB ele não )
-        log_info("[P57.9] Igual a '1' [Entrou no IF (06)]")
         time.sleep(1.5)
 
     else:
         # (2) Preencher o campo P57.9
         pyautogui.write(valor_outro_meio)
-        log_info(f"[P57.9] Valor preenchido: {valor_outro_meio} - [Entrou no ELSE] -  diferente de '1', pulando campo de especificação.")
-        
+        log_info(f"[P57.9] Valor preenchido: {valor_outro_meio}")
+        log_info("P57.9 diferente de '1', pulando campo de especificação. [Entrou no ELSE]")
+
         # (3) Clique técnico para garantir foco (se necessário)
         #pyautogui.click(x=671, y=505)
         pyautogui.press("tab")
-        time.sleep(1.0)
-        pyautogui.click(x=671, y=506) # Click para garantir o foco correto (Primeira execução detectada: Realizando clique de ajuste em (671, 505). o sistema tem um erro de foco, que apos o TAB ele não )
-        time.sleep(0.5)
-        pyautogui.click(x=671, y=506)
+        pyautogui.click(x=671, y=505)
         pyautogui.press("tab")
         time.sleep(1.0)
 
@@ -1013,7 +998,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         #pyautogui.press("tab")
 
     # --- FIM DA LÓGICA ATUALIZADA ---
-        
+        time.sleep(1.5)
 
     
     # 1. Obter o valor, usando '9' como padrão se estiver vazio ou ausente ('')
