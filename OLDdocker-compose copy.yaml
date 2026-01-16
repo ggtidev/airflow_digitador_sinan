@@ -1,0 +1,143 @@
+# ============================================================
+# 🐳 Docker Compose - Apache Airflow (LocalExecutor)
+# ============================================================
+#
+# Ambiente:
+# - Sistema Operacional: Windows 11
+# - Airflow: 2.8.4 (estável)
+# - Executor: LocalExecutor (ideal para RPA)
+#
+# Portas:
+# - Airflow Web UI → http://localhost:8081
+# - PgAdmin → http://localhost:8080
+#
+# ============================================================
+
+services:
+
+  # ==========================================================
+  # 🐘 PostgreSQL - Banco de dados do Airflow
+  # ==========================================================
+  postgres:
+    image: postgres:16                     # Imagem oficial do PostgreSQL
+    container_name: airflow-postgres       # Nome fixo do container
+    environment:
+      POSTGRES_USER: airflow               # Usuário do banco
+      POSTGRES_PASSWORD: airflow           # Senha do banco
+      POSTGRES_DB: airflow                 # Nome do banco
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+      # Volume persistente para não perder dados ao reiniciar containers
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 10s
+      retries: 5
+    restart: always                        # Reinicia automaticamente em caso de falha
+
+  # ==========================================================
+  # 🔴 Redis (opcional, mas mantido para extensões futuras)
+  # ==========================================================
+  redis:
+    image: redis:7.2-bookworm              # Redis compatível com licenças atuais
+    container_name: airflow-redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 5
+    restart: always
+
+  # ==========================================================
+  # 🚀 Airflow Init
+  # ==========================================================
+  # Este container:
+  # - Inicializa o banco
+  # - Cria o usuário admin
+  # - Executa apenas UMA vez
+  # ==========================================================
+  airflow-init:
+    image: apache/airflow:2.8.4
+    container_name: airflow-init
+    depends_on:
+      postgres:
+        condition: service_healthy          # Aguarda o PostgreSQL ficar pronto
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false" # Não carrega DAGs de exemplo
+      _AIRFLOW_WWW_USER_CREATE: "true"      # Cria usuário admin automaticamente
+      _AIRFLOW_WWW_USER_USERNAME: airflow
+      _AIRFLOW_WWW_USER_PASSWORD: airflow
+    volumes:
+      - ./dags:/opt/airflow/dags            # DAGs do projeto
+      - ./logs:/opt/airflow/logs            # Logs do Airflow
+      - ./plugins:/opt/airflow/plugins      # Plugins customizados
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        # Migra/cria o banco de dados
+        airflow db migrate &&
+
+        # Cria o usuário administrador
+        airflow users create \
+          --username airflow \
+          --password airflow \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email admin@example.com
+
+  # ==========================================================
+  # 🌐 Airflow Webserver
+  # ==========================================================
+  # Interface Web (UI)
+  # Porta exposta: 8081
+  # ==========================================================
+  airflow-webserver:
+    image: apache/airflow:2.8.4
+    container_name: airflow-webserver
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    ports:
+      - "8081:8080"                         # Airflow Web UI
+    command: webserver
+    restart: always
+
+  # ==========================================================
+  # ⏰ Airflow Scheduler
+  # ==========================================================
+  # Responsável por:
+  # - Agendar DAGs
+  # - Disparar tarefas
+  # ==========================================================
+  airflow-scheduler:
+    image: apache/airflow:2.8.4
+    container_name: airflow-scheduler
+    depends_on:
+      airflow-webserver:
+        condition: service_started
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    command: scheduler
+    restart: always
+
+# ============================================================
+# 💾 Volumes persistentes
+# ============================================================
+volumes:
+  postgres-db-volume:
+    # Volume do banco PostgreSQL

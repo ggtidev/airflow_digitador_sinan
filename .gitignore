@@ -1,0 +1,23 @@
+# Airflow
+logs/
+plugins/
+airflow.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.env
+
+# Docker
+*.log
+*.pid
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
