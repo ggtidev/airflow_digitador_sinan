@@ -1,0 +1,137 @@
+# Funcionando porem com erro nos contanier O problema agora é o webserver / scheduler, eles estão iniciando e parando em loop.
+version: "3.9"
+
+# ============================================================
+# 🌐 REDE DO AIRFLOW
+# - Permite comunicação por nome de serviço (sem IP fixo)
+# ============================================================
+networks:
+  airflow-net:
+    name: airflow-net
+
+# ============================================================
+# 💾 VOLUMES PERSISTENTES
+# ============================================================
+volumes:
+  airflow-postgres-db:
+
+
+services:
+
+  # ============================================================
+  # 🐘 POSTGRES (Banco do Airflow)
+  # ============================================================
+  airflow-postgres:
+    image: postgres:15
+    container_name: airflow-postgres
+    restart: always
+    networks:
+      - airflow-net
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - airflow-postgres-db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U airflow" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # 🔴 REDIS (necessário mesmo com LocalExecutor em alguns casos)
+  # ============================================================
+  airflow-redis:
+    image: redis:7
+    container_name: airflow-redis
+    restart: always
+    networks:
+      - airflow-net
+
+  # ============================================================
+  # ⚙️ AIRFLOW INIT
+  # - Instala dependências
+  # - Migra banco
+  # - Cria usuário admin
+  # ============================================================
+  airflow-init:
+    image: apache/airflow:2.8.4
+    container_name: airflow-init
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+    networks:
+      - airflow-net
+
+    environment:
+      # 🗄️ Banco de dados (FORÇANDO POSTGRES)
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+
+      # 🔑 SECRET KEY (OBRIGATÓRIO E IGUAL EM TODOS OS SERVIÇOS)
+      AIRFLOW__WEBSERVER__SECRET_KEY: "b7c8a6e4f1d9a0c23e4f9b1d7e3a2c8f"
+
+      # 👤 USUÁRIO ADMIN
+      AIRFLOW_ADMIN_USERNAME: admin
+      AIRFLOW_ADMIN_PASSWORD: admin
+      AIRFLOW_ADMIN_FIRSTNAME: Admin
+      AIRFLOW_ADMIN_LASTNAME: User
+      AIRFLOW_ADMIN_EMAIL: admin@local.dev
+
+    volumes:
+      # 📂 DAGs
+      - ./dags:/opt/airflow/dags
+      # 📂 Projetos externos (seu código)
+      - ./projects:/opt/projects
+      # 📦 Dependências Python
+      - ./requirements.txt:/requirements.txt
+      # 🧠 Script de inicialização
+      - ./scripts/airflow-init.sh:/airflow-init.sh
+
+    # ⚠️ NO WINDOWS NÃO USAMOS chmod
+    entrypoint: /bin/bash
+    command: /airflow-init.sh
+
+  # ============================================================
+  # 🌐 AIRFLOW WEBSERVER
+  # ============================================================
+  airflow-webserver:
+    image: apache/airflow:2.8.4
+    container_name: airflow-webserver
+    depends_on:
+      - airflow-init
+    networks:
+      - airflow-net
+    ports:
+      - "8081:8080"
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__WEBSERVER__SECRET_KEY: "b7c8a6e4f1d9a0c23e4f9b1d7e3a2c8f"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./projects:/opt/projects
+      - ./logs:/opt/airflow/logs
+    command: webserver
+
+  # ============================================================
+  # ⏱️ AIRFLOW SCHEDULER
+  # ============================================================
+  airflow-scheduler:
+    image: apache/airflow:2.8.4
+    container_name: airflow-scheduler
+    depends_on:
+      - airflow-webserver
+    networks:
+      - airflow-net
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__WEBSERVER__SECRET_KEY: "b7c8a6e4f1d9a0c23e4f9b1d7e3a2c8f"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./projects:/opt/projects
+      - ./logs:/opt/airflow/logs
+    command: scheduler

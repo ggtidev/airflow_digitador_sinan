@@ -1,9 +1,14 @@
+# ============================================================
+# 🐳 AIRFLOW + POSTGRES + REDIS (LOCAL DEV)
+# ============================================================
+
 services:
-  # =========================
-  # POSTGRES (Metadata DB)
-  # =========================
+
+  # ------------------------------------------------------------
+  # POSTGRES - BANCO DO AIRFLOW
+  # ------------------------------------------------------------
   airflow-postgres:
-    image: postgres:16
+    image: postgres:15
     container_name: airflow-postgres
     environment:
       POSTGRES_USER: airflow
@@ -12,101 +17,103 @@ services:
     volumes:
       - airflow-postgres-db:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "airflow" ]
+      test: [ "CMD-SHELL", "pg_isready -U airflow" ]
       interval: 10s
       retries: 5
-    restart: always
+    networks:
+      - airflow-net
 
-  # =========================
-  # REDIS
-  # =========================
+  # ------------------------------------------------------------
+  # REDIS - CELERY / BACKEND
+  # ------------------------------------------------------------
   airflow-redis:
-    image: redis:7.2
+    image: redis:7
     container_name: airflow-redis
-    restart: always
+    networks:
+      - airflow-net
 
-  # =========================
-  # AIRFLOW INIT (CRÍTICO)
-  # =========================
+  # ------------------------------------------------------------
+  # AIRFLOW INIT - MIGRA + CRIA USUÁRIO ADMIN
+  # ------------------------------------------------------------
   airflow-init:
     image: apache/airflow:2.8.4
     container_name: airflow-init
     depends_on:
       airflow-postgres:
         condition: service_healthy
-    volumes:
-      - ./dags:/opt/airflow/dags
-      - ./projects:/opt/projects
-      - ./requirements.txt:/requirements.txt
+    env_file:
+      - .env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
-      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      # 🔑 SECRET KEY (OBRIGATÓRIO E IGUAL EM TODOS OS SERVIÇOS)
+      AIRFLOW__WEBSERVER__SECRET_KEY: "b7c8a6e4f1d9a0c23e4f9b1d7e3a2c8f"
+    volumes:
+      - ./scripts:/scripts
+      - ./requirements.txt:/requirements.txt
+    entrypoint: /bin/bash
+    command: /scripts/airflow-init.sh
+    networks:
+      - airflow-net
 
-    command: >
-      bash -c " echo '📦 Instalando dependências' && pip install --no-cache-dir -r /requirements.txt &&
-
-      echo '🗄️ Migrando banco' && airflow db migrate &&
-
-      echo '👤 Verificando usuário admin' && airflow users list | grep -q '^admin ' || airflow users create
-        --username admin
-        --password admin
-        --firstname Admin
-        --lastname User
-        --role Admin
-        --email admin@local.dev
-      "
-
-  # =========================
-  # WEBSERVER
-  # =========================
+  # ------------------------------------------------------------
+  # AIRFLOW WEBSERVER
+  # ------------------------------------------------------------
   airflow-webserver:
     image: apache/airflow:2.8.4
     container_name: airflow-webserver
     depends_on:
-      airflow-init:
-        condition: service_completed_successfully
-    ports:
-      - "8081:8080"
+      - airflow-init
+    env_file:
+      - .env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__WEBSERVER__SECRET_KEY: "b7c8a6e4f1d9a0c23e4f9b1d7e3a2c8f"
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
-      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-
-      # Variáveis do ETL
-      DB_HOST: airflow-postgres
-      DB_PORT: 5432
-      DB_NAME: airflow
-      DB_USER: airflow
-      DB_PASSWORD: airflow
-      REDCAP_API: https://SEU_REDCAP_API_URL/api/
-      REDCAP_TOKEN: SEU_TOKEN_AQUI
-
     volumes:
       - ./dags:/opt/airflow/dags
       - ./projects:/opt/projects
-      - ./requirements.txt:/requirements.txt
-    command: >
-      bash -c " pip install --no-cache-dir -r /requirements.txt && airflow webserver "
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    ports:
+      - "8081:8080"
+    command: webserver
+    networks:
+      - airflow-net
 
-  # =========================
-  # SCHEDULER
-  # =========================
+  # ------------------------------------------------------------
+  # AIRFLOW SCHEDULER
+  # ------------------------------------------------------------
   airflow-scheduler:
     image: apache/airflow:2.8.4
     container_name: airflow-scheduler
     depends_on:
-      airflow-init:
-        condition: service_completed_successfully
+      - airflow-webserver
+    env_file:
+      - .env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__WEBSERVER__SECRET_KEY: "b7c8a6e4f1d9a0c23e4f9b1d7e3a2c8f"
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
     volumes:
       - ./dags:/opt/airflow/dags
       - ./projects:/opt/projects
-      - ./requirements.txt:/requirements.txt
-    command: >
-      bash -c " pip install --no-cache-dir -r /requirements.txt && airflow scheduler "
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    command: scheduler
+    networks:
+      - airflow-net
 
+# ============================================================
+# VOLUMES
+# ============================================================
 volumes:
   airflow-postgres-db:
+
+    # ============================================================
+    # NETWORK
+    # ============================================================
+networks:
+  airflow-net:
+    driver: bridge
