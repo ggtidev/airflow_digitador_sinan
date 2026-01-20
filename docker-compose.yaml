@@ -105,15 +105,35 @@ services:
     networks:
       - airflow-net
 
+  # ------------------------------------------------------------
+  # POSTGRES - SINAN API
+  # ------------------------------------------------------------
+  postgres_sinan:
+    image: postgres:16
+    container_name: postgres_sinan
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sinan_api
+    ports:
+      - "5433:5432"
+    volumes:
+      - sinan_pgdata:/var/lib/postgresql/data
+    networks:
+      - airflow-net
+
 # ============================================================
 # VOLUMES
 # ============================================================
 volumes:
   airflow-postgres-db:
+  sinan_pgdata:
 
     # ============================================================
     # NETWORK
     # ============================================================
 networks:
   airflow-net:
-    driver: bridge
+    external: true
+    name: prod
