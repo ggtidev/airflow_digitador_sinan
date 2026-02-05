@@ -11,6 +11,10 @@ Pipeline SINAN:
 ✔ Execução isolada por task
 ✔ Seguro contra Broken DAG
 """
+# =====================================================================
+# Versão inicial que tentada rodar os 3 projetos.
+# =====================================================================
+__version__ = "1.0.0"
 
 # =====================================================================
 # IMPORTS OBRIGATÓRIOS (NUNCA use airflow.sdk)
