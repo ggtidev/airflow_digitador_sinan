@@ -16,11 +16,13 @@ from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.utils.trigger_rule import TriggerRule
+from sqlalchemy import create_engine, inspect
 
 from datetime import datetime, timedelta
 import subprocess
 import os
 import glob
+import sys
 
 # =========================================================
 # CONFIGURAÇÕES
@@ -64,24 +66,50 @@ def get_env_vars():
 
 def verificar_branch_migration(**context):
     """
-    Decide qual caminho seguir:
-    - Se não houver migrations: segue para 'gerar_migration' (Regra 01).
-    - Se houver migrations: segue para 'executar_carga_violencia' (Regra 02).
+    Decide qual caminho seguir verificando o ESTADO DO BANCO:
+    1. Conecta no banco.
+    2. Se tabela 'rpa_notificacao' existir -> Carga (executar_carga_violencia).
+    3. Se não existir:
+       - Se houver arquivos de migration -> Aplicar (aplicar_migration).
+       - Se não houver arquivos -> Gerar (gerar_migration).
     """
-    print(f"🔎 Verificando migrações em: {MIGRATIONS_DIR}")
+    print(f"🔎 Verificando estado do banco e migrações...")
     
-    # Lista arquivos .py na pasta versions (ignora __pycache__ e init)
+    # 1. Verificar Banco de Dados
+    env = get_env_vars()
+    db_url = f"postgresql+psycopg2://{env['API_DB_USER']}:{env['API_DB_PASSWORD']}@{env['API_DB_HOST']}:{env['API_DB_PORT']}/{env['API_DB_NAME']}"
+    
+    tables = []
+    try:
+        engine = create_engine(db_url)
+        insp = inspect(engine)
+        tables = insp.get_table_names()
+        print(f"📋 Tabelas encontradas: {tables}")
+    except Exception as e:
+        print(f"⚠️ Erro ao conectar/listar tabelas: {e}")
+        # Se der erro, vamos assumir que precisa verificar migrations
+        pass
+
+    if 'rpa_notificacao' in tables:
+        print("✅ Tabela 'rpa_notificacao' encontrada.")
+        print("➡️ Decisão: Seguir para Carga (executar_carga_violencia).")
+        return "executar_carga_violencia"
+
+    print("⚠️ Tabela 'rpa_notificacao' NÃO encontrada.")
+    
+    # 2. Verificar Arquivos de Migração
+    print(f"🔎 Verificando arquivos em: {MIGRATIONS_DIR}")
     migracoes = glob.glob(f"{MIGRATIONS_DIR}/*.py")
     versao_arquivos = [f for f in migracoes if "__init__" not in f]
 
     if len(versao_arquivos) > 0:
         print(f"⚠️ Migrações já existem ({len(versao_arquivos)} arquivos found).")
         print(f"Arquivos: {[os.path.basename(f) for f in versao_arquivos]}")
-        print("➡️ Decisão: Seguir para Regra 02 (Carga Direta).")
-        return "executar_carga_violencia"
+        print("➡️ Decisão: Aplicar Migrations existentes (aplicar_migration).")
+        return "aplicar_migration"
     
     print("✨ Nenhuma migração encontrada.")
-    print("➡️ Decisão: Seguir para Regra 01 (Gerar Migration).")
+    print("➡️ Decisão: Gerar Migration inicial (gerar_migration).")
     return "gerar_migration"
 
 
@@ -179,20 +207,20 @@ with DAG(
         python_callable=verificar_branch_migration,
     )
 
-    # Regra 01: Tasks
+    # Regra 01 (Caminho A): Gerar migration
     task_gerar_migration = PythonOperator(
         task_id="gerar_migration",
         python_callable=gerar_migration_func,
     )
 
+    # Regra 01 (Caminho B) ou sequencia de A: Aplicar migration
     task_aplicar_migration = PythonOperator(
         task_id="aplicar_migration",
         python_callable=aplicar_migration_func,
+        trigger_rule=TriggerRule.NONE_FAILED_MIN_ONE_SUCCESS, # Permite rodar se vier do branch OU do gerar
     )
 
     # Regra 01 & 02: Carga
-    # TriggerRule.NONE_FAILED_MIN_ONE_SUCCESS garante que rode se vier 
-    # da branch 'aplicar_migration' OU direto da branch 'verificar_estado_banco'
     task_carga_dados = PythonOperator(
         task_id="executar_carga_violencia",
         python_callable=executar_carga_violencia,
@@ -204,10 +232,13 @@ with DAG(
     # Fluxo
     inicio >> branch_task
     
-    # Caminho Regra 01
-    branch_task >> task_gerar_migration >> task_aplicar_migration >> task_carga_dados
-    
-    # Caminho Regra 02 (Pula migrations direto para carga)
+    # Caminhos do Branch
+    branch_task >> task_gerar_migration
+    branch_task >> task_aplicar_migration
     branch_task >> task_carga_dados
+    
+    # Dependências sequenciais
+    task_gerar_migration >> task_aplicar_migration
+    task_aplicar_migration >> task_carga_dados
     
     task_carga_dados >> fim
