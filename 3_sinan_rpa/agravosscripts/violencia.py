@@ -28,6 +28,10 @@ print("Pasta de imagens usada:", IMAGENS_DIR)
 primeira_execucao = True
 pyautogui.PAUSE = 0.3
 
+# Variável global que rastreia o campo/pergunta que está sendo preenchido no momento.
+# Sempre atualizada antes de cada campo, para que em caso de erro, saibamos onde parou.
+_pergunta_digitando = "(inicio)"
+
 # Lista de Unidades de Saúde que exigem o CNES específico 6468918
 UNIDADES_ESPECIAIS_CNES = {
     "SECRETARIA DE SAUDE", 
@@ -63,7 +67,7 @@ def executar_violencia(item, reaproveitar_sessao=False, tem_proxima=False):
             abrir_sinan()
             username, password = get_usuario_ativo()
             login(username, password)
-            time.sleep(6) #Tempo para teste (12/12/2025) Coloquei porque estava demorando para abrir o sinan
+            time.sleep(2) #Tempo para teste (12/12/2025) Coloquei porque estava demorando para abrir o sinan
             selecionar_agravo(agravo_nome) # Seleciona o agravo de violência
 
         log_info(f"Iniciando preenchimento da notificação: {num_notificacao}")
@@ -150,12 +154,12 @@ def executar_violencia(item, reaproveitar_sessao=False, tem_proxima=False):
     # **BLOCO EXCEPT Corrigido: Registra erro e re-lança a exceção**
     except Exception as e:
         log_erro(f"Erro FATAL durante execução do script violência para {num_notificacao}: {e}")
-        # Se houve um erro FATAL, registra o status "erro_digitacao"
+        log_erro(f"Pergunta que estava sendo preenchida quando o erro ocorreu: {_pergunta_digitando}")
+        # Se houve um erro FATAL, registra o status "erro_digitacao" e a pergunta que estava sendo preenchida
         if num_notificacao:
-            # Chame registrar_erro (que atualiza para "erro_digitacao")
-            registrar_erro(num_notificacao) 
-            log_info(f"Status da notificação {num_notificacao} atualizado para 'erro_digitacao' devido a erro fatal.")
-        raise e # Interrompe o fluxo e impede que o bloco 'else' seja executado.
+            registrar_erro(num_notificacao, erro_pergunta=_pergunta_digitando)
+            log_info(f"Status da notificação {num_notificacao} atualizado para 'erro_digitacao'. Pergunta: {_pergunta_digitando}")
+        raise e  # Interrompe o fluxo e impede que o bloco 'else' seja executado.
         
     # **BLOCO ELSE: Executado SOMENTE se o 'try' for concluído sem exceções.**
     else:
@@ -170,7 +174,7 @@ def abrir_sinan():
     pyautogui.write("sinan")
     time.sleep(3)
     pyautogui.press("enter")
-    time.sleep(6)
+    time.sleep(2)
 
 def login(usuario, senha):
     log_info(f"Realizando login com o usuário: {usuario}") # Loga apenas o usuário
@@ -179,7 +183,7 @@ def login(usuario, senha):
     pyautogui.press("tab")
     pyautogui.write(senha)
     pyautogui.press("enter")
-    time.sleep(8)
+    time.sleep(2)
 
 def selecionar_agravo(nome_agravo):
     pyautogui.click(x=72, y=59)
@@ -187,17 +191,20 @@ def selecionar_agravo(nome_agravo):
     pyautogui.press("enter")
     time.sleep(2)
     pyautogui.press("enter")
-    time.sleep(5)
+    time.sleep(2)
 
 def preencher_bloco_notificacao(campos, num_notificacao):
+    global _pergunta_digitando
     log_debug(f"Campos notificação: {campos}")
+    _pergunta_digitando = "P01 - Número da Notificação"
     pyautogui.write(num_notificacao)
     pyautogui.press("tab")  
+    _pergunta_digitando = "P03 - Data da Notificação"
     pyautogui.write(campos['data_notificacao']) # Pergunta 03
     pyautogui.press("tab", presses=3)
     
     # --- VALIDAÇÃO CONDICIONAL DA UNIDADE NOTIFICADORA (P06) ---
-    # Se o valor for == 2, 3, 4, 5 ou 6: Chama verificar_e_tratar_erro() para validar se há erro na tela do SINAN
+    _pergunta_digitando = "P06 - Unidade Notificadora"
     unidade_notificadora = campos.get('unidade_notificadora', '')
     if unidade_notificadora in ['2', '3', '4', '5', '6']:
         log_info(f"[REGRA-UNIDADE] Unidade Notificadora '{unidade_notificadora}' requer validação imediata de erro.")
@@ -212,6 +219,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     pyautogui.press("tab")
 
     # --- INÍCIO DA NOVA LÓGICA --- Pergunta 08
+    _pergunta_digitando = "P07/P08 - Unidade/Nome da Unidade de Saúde"
     log_info("Iniciando preenchimento da Pergunta 07 e 08 - Unidade de Saúde / Nome da Unidade.")
     log_debug(f"[P-07] - Valor recebido para Unidade de Saúde / Nome da Unidade: {campos.get('nome_unidade_saude', '')}")
     log_debug(f"[P-08.1] (us_vio) - Nome da Unidade de Saúde: {campos.get('nome_unidade_saude')}")
@@ -369,6 +377,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     # --- FIM DA NOVA LÓGICA --- Pergunta 08
 
     time.sleep(2)
+    _pergunta_digitando = "P09 - Data da Ocorrência"
     pyautogui.write(campos['data_ocorrencia']) # Pergunta 09
     pyautogui.press("tab")
 
@@ -382,6 +391,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     # ====
 
     # (1) Pergunta 10 - Nome do Paciente
+    _pergunta_digitando = "P10 - Nome do Paciente"
     pyautogui.write(campos['nome_paciente'])
     pyautogui.press("tab")
 
@@ -389,6 +399,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
 
     # (2) Pergunta 11 - Data de Nascimento
     if campos.get('data_nascimento_completa'):
+        _pergunta_digitando = "P11 - Data de Nascimento"
         data_nascimento = campos['data_nascimento_completa']
         log_debug(f"[P-11] Data de Nascimento: {data_nascimento}")
         pyautogui.write(data_nascimento)
@@ -401,6 +412,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
             raise Exception(f"Erro de digitação em {erro_contexto}. Interrupção forçada.")
     else:
         # (3) Pergunta 12 - Idade (quando não há data de nascimento)
+        _pergunta_digitando = "P12 - Idade"
         pyautogui.press("tab")
         idade = int(campos.get('idade_calculada_notificador', 0))
         pyautogui.write(str(idade))
@@ -415,15 +427,18 @@ def preencher_bloco_notificacao(campos, num_notificacao):
         pyautogui.press("tab")
 
     # (4) Pergunta 13 - Sexo (REGRA MANTIDA)
+    _pergunta_digitando = "P13 - Sexo"
     pyautogui.write(campos['sexo'])
 
     # (5) Pergunta 14 - Gestante (campo fechado na maioria dos casos)
+    _pergunta_digitando = "P14 - Gestante"
     if campos['sexo'].upper() == "F" and idade >= 11:
         pyautogui.press("tab")
         pyautogui.write(campos.get('gestante', '9'))
     pyautogui.press("tab")
 
     # (6) Pergunta 15 - Raça/Cor
+    _pergunta_digitando = "P15 - Raça/Cor"
     if campos.get('raca'):
         pyautogui.write(campos['raca'])
     pyautogui.press("tab")
@@ -440,6 +455,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
 
     if idade >= 7 and campos.get('escolaridade'):
         # ⚠️ Escolaridade SOMENTE quando idade >= 7
+        _pergunta_digitando = "P16 - Escolaridade"
 
         mapeamento_escolaridade = {
             '1': '0',   # Analfabeto
@@ -479,6 +495,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     # --- FIM DA NOVA LÓGICA DE MAPEAMENTO (ESCOLARIDADE) ---
 
     # (8) Pergunta 17 - Cartão SUS
+    _pergunta_digitando = "P17 - Cartão SUS"
     time.sleep(0.5)
     if campos.get('cartao_sus'):
         pyautogui.write(campos['cartao_sus'])
@@ -488,6 +505,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     pyautogui.press("tab")
 
     # (9) Pergunta 18 - Nome da Mãe
+    _pergunta_digitando = "P18 - Nome da Mãe"
     if campos.get('nome_mae'): # pergunta 18
         pyautogui.write(campos['nome_mae']) 
         log_debug(f"[Pergunta-18] Preenchendo Nome da Mãe: {campos['nome_mae']}")
@@ -503,9 +521,10 @@ def preencher_bloco_notificacao(campos, num_notificacao):
 
     time.sleep(4)
     # Bloco dados de residência
+    _pergunta_digitando = "P19 - UF Residência"
     pyautogui.write(campos['uf_residencia_vio']) # Pergunta 19
     pyautogui.press("tab")
-    
+    _pergunta_digitando = "P20 - Município Residência"
     pyautogui.write(campos['municipio_residencia'])
     pyautogui.press("tab")
 
@@ -532,15 +551,20 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     pyautogui.press("tab") # Garante a navegação para o próximo campo (Endereço)
      # --- FIM DA ATUALIZAÇÃO ---
 
+    # Verificar porque esse campo não esta preenchendo (André)
     if campos.get('endereco_residencia'): 
         pyautogui.write(campos['endereco_residencia']) # Pergunta 23.0
+        pyautogui.press("tab") # novo
+        pyautogui.press("esc") # novo
+        pyautogui.press("tab") # novo
     
     # Ao inves de ser tab tem que ser um click(x=685, y=507) para ir para o campo Codigo
-    log_info("Clicando para focar no campo 'Código' (x=685, y=507).")
-    pyautogui.click(x=685, y=507)
-    time.sleep(0.5)
-    log_debug("Pulando campo Código (vazio).")
-    pyautogui.press("tab")
+    
+    #log_info("Clicando para focar no campo 'Código' (x=685, y=507).")
+    #pyautogui.click(x=685, y=507)
+    #time.sleep(0.5)
+    #log_debug("Pulando campo Código (vazio).")
+    #pyautogui.press("tab")
     
     if campos.get('numero_residencia'):
         pyautogui.write(campos['numero_residencia']) # Pergunta 24
@@ -579,6 +603,7 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     return idade
 
 def preencher_bloco_investigacao(campos, idade, num_notificacao):
+    global _pergunta_digitando
     log_debug(f"Campos investigação: {campos}")
     log_debug(f"Idade recebida para investigação: {idade}")
     
@@ -598,6 +623,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     if idade >= 10:
         
         # --- PERGUNTA 35 (ESTADO CIVIL) ---
+        _pergunta_digitando = "P35 - Estado Civil"
         valor_sinan_35 = '9' # Padrão para Ignorado
         if campos.get('estado_civil'): # Pergunta 35
             mapeamento_estado_civil = {
@@ -617,6 +643,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         pyautogui.press("tab")
         
         # --- PERGUNTA 36 (ORIENTAÇÃO SEXUAL) ---
+        _pergunta_digitando = "P36 - Orientação Sexual"
         valor_sinan_36 = '9' # Padrão para Ignorado
         if campos.get('orientacao_sexual'): # Pergunta 36 
             mapeamento_orientacao = {
@@ -635,6 +662,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         pyautogui.press("tab")
         
         # --- PERGUNTA 37 (IDENTIDADE DE GENERO) ---
+        _pergunta_digitando = "P37 - Identidade de Gênero"
         valor_sinan_37 = '9' # Padrão para Ignorado
         if campos.get('identidade_genero'): # Pergunta 37
             mapeamento_genero = {
@@ -674,6 +702,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     #log_debug(f"Campos (38) DEFICIENCIA: {campos.get('deficiencia')}")
 
     # --- Pergunta 38: Possui algum tipo de deficiência/transtorno? ---
+    _pergunta_digitando = "P38/P39 - Deficiência/Transtorno"
     valor_deficiencia = campos.get('deficiencia', '').strip() or '9'  # Se vier vazio, assume '9' (Ignorado)
     pyautogui.write(valor_deficiencia)
     log_debug(f"Campos (38) DEFICIÊNCIA preenchido: {valor_deficiencia}")
@@ -722,6 +751,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         # 7. Outras Deficiências (39.7)  - viol_7 (RedCap)
         valor_outras = campos.get('outras_deficiencias', '9')
         pyautogui.write(valor_outras)
+        #salvar na variavel a pergunta.
         
         # Lógica para campo 'Outras' (P39) - Se Sim, descreve
         if valor_outras == "1":
@@ -750,7 +780,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     
 
     # --- PERGUNTA 40 (UF OCORRÊNCIA) - (uf_ocor_vio) ---
-    
+    _pergunta_digitando = "P40 - UF Ocorrência"
     log_debug(f"Campos (40) UF OCORRÊNCIA - (Antes do IF): {campos['uf_ocorrencia']}")
     time.sleep(3)
     if campos.get('uf_ocorrencia'):
@@ -770,6 +800,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     # --- FIM DA VALIDAÇÃO DE ERRO ---
        
     # --- PERGUNTA 41 (MUNICIPIO OCORRENCIA) --- (ds_resid) 
+    _pergunta_digitando = "P41 - Município Ocorrência"
     municipio_valor = f"%{campos['municipio_ocorrencia']}%"
     log_info(f"Preenchendo Município Ocorrência (P41): {municipio_valor}") # Log adicionado
     
@@ -852,6 +883,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     #pyautogui.press("tab")
 
     # --- Pergunta 53: Ocorreu outras vezes? (1-Sim, 2-Não, 9-Ignorado) ---
+    _pergunta_digitando = "P53 - Ocorreu Outras Vezes"
     valor_ocorreu_outras_vezes = campos.get('ocorreu_outras_vezes', '').strip() or '9'
     pyautogui.write(valor_ocorreu_outras_vezes)
     log_debug(f"Campos (53) Ocorreu outras vezes preenchido: {valor_ocorreu_outras_vezes}")
@@ -861,16 +893,15 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     #INCLUIR LISTA COMPARATIVA DE NUMEROS QUE VEM DO REDCAP
     
     # Pergunta 54: Lesão Autoprovocada
-    # Se 'lesao_autoprovocada' estiver ausente (None) ou em branco, .get() retornará '9'.
+    _pergunta_digitando = "P54 - Lesão Autoprovocada"
     pyautogui.write(campos.get('lesao_autoprovocada', '9')) 
     pyautogui.press("tab")
-    
+    _pergunta_digitando = "P55 - Motivo da Violência"
     pyautogui.write(campos['motivo_violencia']) # pergunta 55
     pyautogui.press("tab")
     
     # Bloco Tipo de Violência (Perguntas 56.1 a 56.10)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-
+    _pergunta_digitando = "P56 - Tipo de Violência"
     # pergunta 56.1
     pyautogui.write(campos.get('fisica', '9')) 
     pyautogui.press("tab")
@@ -919,8 +950,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         pyautogui.press("tab")
     
     # Bloco Meio de Agressão (Perguntas 57.1 a 57.8)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-
+    _pergunta_digitando = "P57 - Meio de Agressão"
     # pergunta 57.1
     pyautogui.write(campos.get('forca_corporal_espancamento', '9')) 
     pyautogui.press("tab")
@@ -1017,6 +1047,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
 
     
     # 1. Obter o valor, usando '9' como padrão se estiver vazio ou ausente ('')
+    _pergunta_digitando = 'P60 - Numero de Envolvidos'
     valor_numero_envolvidos = campos.get('numero_envolvidos', '9') # pergunta 60  # out_agres_vio
     log_info(f"[Pergunta 60 ] Número de envolvidos: {valor_numero_envolvidos}")
 
@@ -1025,8 +1056,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     pyautogui.press("tab")
     
     # Relação com a Vítima (Perguntas 61.1 a 61.17)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
-
+    _pergunta_digitando = "P61 - Relação com a Vítima"
     # pergunta 61.1
     pyautogui.write(campos.get('pai', '9')) 
     pyautogui.press("tab")
@@ -1112,24 +1142,22 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     time.sleep(1.5)
 
     # Pergunta 62: Sexo do Agressor.
-    # A regra é aplicada aqui: se 'sexo_agressor' não estiver no dicionário 
-    # 'campos' ou for None/em branco (dependendo de como o .get() está configurado, 
-    # mas geralmente usando o valor padrão '9'), ele preencherá com '9'.
+    _pergunta_digitando = "P62 - Sexo do Agressor"
     pyautogui.write(campos.get('sexo_agressor', '9'))
     pyautogui.press("tab") # Vai para o campo 'Suspeita de uso de álcool'
     
     # Pergunta 63: Suspeita de Uso de Álcool pelo Agressor
-    # Se 'suspeita_alcool' estiver ausente, .get() retornará '9', aplicando a regra.
+    _pergunta_digitando = "P63 - Suspeita de Álcool"
     pyautogui.write(campos.get('suspeita_alcool', '9')) 
     pyautogui.press("tab")
 
     # Pergunta 64: Ciclo de Vida do Autor/Agressor
-    # Se 'ciclo_vida_autor' estiver ausente, .get() retornará '9', aplicando a regra.
+    _pergunta_digitando = "P64 - Ciclo de Vida do Agressor"
     pyautogui.write(campos.get('ciclo_vida_autor', '9')) 
     pyautogui.press("tab")
 
     # Encaminhamentos (Perguntas 65.1 a 65.14)
-    # Regra: Se o campo estiver ausente ou em branco, preenche com '9' (Ignorado)
+    _pergunta_digitando = "P65 - Encaminhamentos"
     # pergunta 65.1
     pyautogui.write(campos.get('rede_saude', '9')) 
     pyautogui.press("tab")
@@ -1186,6 +1214,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     pyautogui.write(campos.get('defensoria_publica', '9')) 
     pyautogui.press("tab")
     
+    _pergunta_digitando = "P66 - Relação com o Trabalho"
     if campos.get('relacao_trabalho'): # pergunta 66 #se não vier nada colocar 9
         pyautogui.write(campos['relacao_trabalho']) 
     pyautogui.press("tab", presses=2)
@@ -1211,6 +1240,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     # Bloco anterior (P66) finalizado, agora a P69 (Data de Encerramento)   
     # --- INÍCIO DA CORREÇÃO NA PERGUNTA 69 (Data de Encerramento) ---
     
+    _pergunta_digitando = "P69 - Data de Encerramento"
     data_encerramento = campos.get('data_encerramento', '').strip() or campos.get('data_notificacao', '') # pergunta 69
     # Botar nova regra de preenchimento:
     # Se 'data_encerramento' for maior ou igual que 'data_notificacao', usar 'data_notificacao'
@@ -1234,5 +1264,6 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         
     # --- FIM DA CORREÇÃO NA PERGUNTA 69 ---
 
+    _pergunta_digitando = 'P70 - Observacoes'
     if campos.get('observacoes'): # pergunta 70 (Observações adicionais)
         pyautogui.write(campos['observacoes'])

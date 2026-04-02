@@ -30,9 +30,19 @@ def atualizar_status(num_notificacao: str, novo_status: str = "concluido"):
         print(f"Erro ao atualizar status da notificação {num_notificacao} para '{novo_status}': {e}")
         return False
 
-def registrar_erro(num_notificacao: str):
+def registrar_erro(num_notificacao: str, erro_pergunta: str = None):
     """
     Função dedicada para registrar um erro de digitação na API,
     definindo o status da notificação como "erro_digitacao".
+    Opcionalmente, registra qual campo/pergunta estava sendo preenchido quando o erro ocorreu.
     """
-    return atualizar_status(num_notificacao, novo_status="erro_digitacao")
+    try:
+        payload = {"status": "erro_digitacao"}
+        if erro_pergunta:
+            payload["erro_pergunta"] = erro_pergunta
+        response = requests.patch(f"{API_URL}/notificacoes/{num_notificacao}", json=payload, timeout=10)
+        response.raise_for_status()
+        return True
+    except Exception as e:
+        print(f"Erro ao registrar erro da notificação {num_notificacao}: {e}")
+        return False

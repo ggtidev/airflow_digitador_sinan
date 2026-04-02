@@ -32,6 +32,7 @@ class RpaNotificacao(Base):
     num_notificacao = Column(String(7), nullable=False)
     record = Column(String, nullable=False)
     status = Column(String, nullable=False)
+    erro_pergunta = Column(String, nullable=True)
     agravo_id = Column(Integer, ForeignKey('agravos.id'), nullable=False)
 
     agravo = relationship('Agravo', back_populates='notificacoes')

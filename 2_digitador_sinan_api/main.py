@@ -7,9 +7,11 @@ from services.update_status import atualizar_status, obter_status
 from pydantic import BaseModel # ADICIONADO: Para modelagem do corpo da requisição PATCH
 
 # --- SCHEMA DE ENTRADA CORRIGIDO (Pydantic Model) ---
+from typing import Optional
 class NotificacaoUpdate(BaseModel):
     """Modelo para receber o novo status via requisição PATCH."""
     status: str
+    erro_pergunta: Optional[str] = None
 # ---------------------------------------------------
 
 description = """
@@ -120,6 +122,7 @@ def listar_notificacoes():
 class NotificacaoUpdate(BaseModel):
     """Modelo para receber o novo status via requisição PATCH."""
     status: str
+    erro_pergunta: Optional[str] = None
 
 # ... (outras funções GET)
 
@@ -131,8 +134,8 @@ def patch_status_violencia(num_notificacao: str, data: NotificacaoUpdate):
     Recebe no corpo da requisição (JSON):
     - status: O novo status, como 'erro_digitacao' ou 'concluido'.
     """
-    # Chama o serviço, passando o num_notificacao e o status extraído do corpo (data.status)
-    return atualizar_status(num_notificacao, data.status)
+    # Chama o serviço, passando o num_notificacao, status e (opcionalmente) erro_pergunta
+    return atualizar_status(num_notificacao, data.status, data.erro_pergunta)
   
 @app.get("/notificacoes/{num_notificacao}/status", summary="Obter status da notificação", tags=["Notificações Gerais"])
 def get_status_violencia(num_notificacao: str):

@@ -2,30 +2,36 @@
 # Este módulo 'database' deve conter a lógica para se conectar ao seu banco de dados (ex: PostgreSQL, MySQL, etc.).
 from database import get_connection
 
-def atualizar_status(num_notificacao: str, novo_status: str):
+def atualizar_status(num_notificacao: str, novo_status: str, erro_pergunta: str = None):
     """
     Atualiza o status de uma notificação específica no banco de dados.
+    Opcionalmente, grava o campo/pergunta onde ocorreu o erro.
     """
     conn = get_connection()
     cur = conn.cursor()
 
     try:
-        # Usa o 'novo_status' fornecido pelo main.py
-        cur.execute(
-            "UPDATE rpa_notificacoes SET status = %s WHERE num_notificacao = %s",
-            (novo_status, num_notificacao)
-        )
+        if erro_pergunta:
+            # Atualiza status E erro_pergunta
+            cur.execute(
+                "UPDATE rpa_notificacoes SET status = %s, erro_pergunta = %s WHERE num_notificacao = %s",
+                (novo_status, erro_pergunta, num_notificacao)
+            )
+        else:
+            # Atualiza apenas o status
+            cur.execute(
+                "UPDATE rpa_notificacoes SET status = %s WHERE num_notificacao = %s",
+                (novo_status, num_notificacao)
+            )
 
         if cur.rowcount > 0:
-            # Garante que a transação seja commitada se a atualização for bem-sucedida
-            conn.commit() 
+            conn.commit()
             return {"mensagem": f"Status da notificação {num_notificacao} atualizado para '{novo_status}'."}
         else:
             conn.rollback()
             return {"erro": f"Notificação {num_notificacao} não encontrada."}
             
     except Exception as e:
-        # Captura e desfaz a transação em caso de erro no banco de dados
         conn.rollback()
         return {"erro": f"Erro ao atualizar status da notificação {num_notificacao}: {e}"}
         
