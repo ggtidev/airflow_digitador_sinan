@@ -74,7 +74,8 @@ def map_to_rpa_format(raw_data):
         "tel_notif_vio": "telefone_uni_notif",
         "ds_resid": "distrito_residencia",
         "bairro_vio": "bairro_residencia",
-        "log_vio": "endereco_residencia",
+        #"log_vio": "endereco_residencia", -> não existe no redcap
+        "log_vio_2": "endereco_residencia",
         # "xxxxxx":"codigo_residencia", # Comentário indica um campo que pode estar faltando no REDCap.
         "num_resid_vio": "numero_residencia",
         "comp_vio": "complemento_residencia",

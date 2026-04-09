@@ -18,7 +18,7 @@ def processar_fila(filas):
 
         executar_script = AGRAVOS_DISPONIVEIS.get(nome_agravo)
 
-        if executar_script:
+        if 9:
             try:
                 reaproveitar = idx > 1
                 tem_proxima = idx < total    

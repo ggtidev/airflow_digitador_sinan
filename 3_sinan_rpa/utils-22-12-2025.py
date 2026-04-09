@@ -247,6 +247,7 @@ def verificar_e_tratar_erro(num_notificacao: str, agravo: str):
             'erro-04-popup.png','erro-05-intem_ja_cadastrado.png','erro-05-popup.png',
             'erro-06-opcao-invalida.png','erro-07-atencao_uf.png', 'erro-07-atencao_uf.jpg','erro-08-atencao_so_recebe_valores_numericos.png',
             'erro-10-dt_nascimento_ou_idade_obrigatorio.png','erro-11-dt_invalida.png','erro-12-idade_inferior_ou_superior.png','erro-12-_idade_inferior_ou_superior.jpg',
+            'erro-13-_preenchimento_obrigatorio.jpg','erro-13-sinan-nao-responde.jpg',
             'erro-14-_data_encerramento_deve_ser_maior_igual_data_notificacao.jpg',
             'erro-15-categoria_nao_permitida.jpg'
         ]
