@@ -1,0 +1,62 @@
+==== LOG DE VALIDAÇÃO DAS NOTIFICAÇÕES ====
+Data e hora da execução: 19/11/2025 15:12:53
+------------------------------------------------------------
+
+[OK] Record 682: Todos os campos principais preenchidos corretamente.
+[OK] Record 683: Todos os campos principais preenchidos corretamente.
+[OK] Record 685: Todos os campos principais preenchidos corretamente.
+[OK] Record 686: Todos os campos principais preenchidos corretamente.
+[OK] Record 687: Todos os campos principais preenchidos corretamente.
+[OK] Record 688: Todos os campos principais preenchidos corretamente.
+[OK] Record 689: Todos os campos principais preenchidos corretamente.
+[OK] Record 690: Todos os campos principais preenchidos corretamente.
+[OK] Record 691: Todos os campos principais preenchidos corretamente.
+[OK] Record 694: Todos os campos principais preenchidos corretamente.
+[OK] Record 695: Todos os campos principais preenchidos corretamente.
+[OK] Record 696: Todos os campos principais preenchidos corretamente.
+[OK] Record 697: Todos os campos principais preenchidos corretamente.
+[OK] Record 699: Todos os campos principais preenchidos corretamente.
+[OK] Record 700: Todos os campos principais preenchidos corretamente.
+[OK] Record 701: Todos os campos principais preenchidos corretamente.
+[OK] Record 702: Todos os campos principais preenchidos corretamente.
+[OK] Record 703: Todos os campos principais preenchidos corretamente.
+[OK] Record 704: Todos os campos principais preenchidos corretamente.
+[OK] Record 705: Todos os campos principais preenchidos corretamente.
+[OK] Record 706: Todos os campos principais preenchidos corretamente.
+[OK] Record 707: Todos os campos principais preenchidos corretamente.
+[OK] Record 708: Todos os campos principais preenchidos corretamente.
+[OK] Record 709: Todos os campos principais preenchidos corretamente.
+[OK] Record 711: Todos os campos principais preenchidos corretamente.
+[OK] Record 712: Todos os campos principais preenchidos corretamente.
+[OK] Record 713: Todos os campos principais preenchidos corretamente.
+[OK] Record 716: Todos os campos principais preenchidos corretamente.
+[OK] Record 717: Todos os campos principais preenchidos corretamente.
+[OK] Record 718: Todos os campos principais preenchidos corretamente.
+[OK] Record 719: Todos os campos principais preenchidos corretamente.
+[OK] Record 720: Todos os campos principais preenchidos corretamente.
+[OK] Record 721: Todos os campos principais preenchidos corretamente.
+[OK] Record 722: Todos os campos principais preenchidos corretamente.
+[OK] Record 723: Todos os campos principais preenchidos corretamente.
+[OK] Record 724: Todos os campos principais preenchidos corretamente.
+[OK] Record 725: Todos os campos principais preenchidos corretamente.
+[OK] Record 726: Todos os campos principais preenchidos corretamente.
+[OK] Record 727: Todos os campos principais preenchidos corretamente.
+[OK] Record 728: Todos os campos principais preenchidos corretamente.
+[OK] Record 729: Todos os campos principais preenchidos corretamente.
+[OK] Record 730: Todos os campos principais preenchidos corretamente.
+[OK] Record 731: Todos os campos principais preenchidos corretamente.
+[OK] Record 732: Todos os campos principais preenchidos corretamente.
+[OK] Record 734: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 735: Campos ausentes ou inválidos -> mun_notif_vio (deve ser 'RECIFE')
+[OK] Record 736: Todos os campos principais preenchidos corretamente.
+[OK] Record 737: Todos os campos principais preenchidos corretamente.
+[OK] Record 738: Todos os campos principais preenchidos corretamente.
+[OK] Record 739: Todos os campos principais preenchidos corretamente.
+
+------------------------------------------------------------
+RESUMO FINAL DA EXECUÇÃO
+Data/hora: 19/11/2025 15:12:53
+Total de notificações processadas: 50
+Total com status 'pendente': 49
+Total com status 'erro': 1
+------------------------------------------------------------

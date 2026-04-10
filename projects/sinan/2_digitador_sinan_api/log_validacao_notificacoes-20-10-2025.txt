@@ -1,0 +1,62 @@
+==== LOG DE VALIDAÇÃO DAS NOTIFICAÇÕES ====
+Data e hora da execução: 20/10/2025 12:33:25
+------------------------------------------------------------
+
+[ERRO] Record 682: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 683: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 685: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 686: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 687: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 688: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 689: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 690: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 691: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 694: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 695: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 696: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 697: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 699: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 700: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 701: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 702: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 703: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 704: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 705: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 706: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 707: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 708: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 709: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 711: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 712: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 713: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 716: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 717: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 718: Todos os campos principais preenchidos corretamente.
+[OK] Record 719: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 720: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 721: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 722: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 723: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 724: Campos ausentes ou inválidos -> us_vio, un_not_vio (O valor da (unidade_notificadora) deve ser '01' ou '7', valor recebido do REDCAP: '6'),  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 725: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 726: Campos ausentes ou inválidos -> us_vio, un_not_vio (O valor da (unidade_notificadora) deve ser '01' ou '7', valor recebido do REDCAP: '6'),  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 727: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 728: Campos ausentes ou inválidos -> us_vio, un_not_vio (O valor da (unidade_notificadora) deve ser '01' ou '7', valor recebido do REDCAP: '6'),  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 729: Campos ausentes ou inválidos -> us_vio, un_not_vio (O valor da (unidade_notificadora) deve ser '01' ou '7', valor recebido do REDCAP: '6'),  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[OK] Record 730: Todos os campos principais preenchidos corretamente.
+[OK] Record 731: Todos os campos principais preenchidos corretamente.
+[ERRO] Record 732: Campos ausentes ou inválidos -> us_vio, un_not_vio (O valor da (unidade_notificadora) deve ser '01' ou '7', valor recebido do REDCAP: '2'),  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 734: Campos ausentes ou inválidos -> us_vio,  [us_vio] = nome_unidade_saude -> (esse campo está AUSENTE no banco, não veio essa informação do REDCAP)
+[ERRO] Record 735: Campos ausentes ou inválidos -> mun_notif_vio (deve ser 'RECIFE')
+[OK] Record 736: Todos os campos principais preenchidos corretamente.
+[OK] Record 737: Todos os campos principais preenchidos corretamente.
+[OK] Record 738: Todos os campos principais preenchidos corretamente.
+[OK] Record 739: Todos os campos principais preenchidos corretamente.
+
+------------------------------------------------------------
+RESUMO FINAL DA EXECUÇÃO
+Data/hora: 20/10/2025 12:33:25
+Total de notificações processadas: 50
+Total com status 'pendente': 14
+Total com status 'erro': 36
+------------------------------------------------------------

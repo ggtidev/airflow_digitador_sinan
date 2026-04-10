@@ -1,0 +1,62 @@
+==== LOG DE VALIDAÇÃO DAS NOTIFICAÇÕES ====
+Data e hora da execução: 19/12/2025 11:54:05
+------------------------------------------------------------
+
+[OK] Record 682: Validado com sucesso.
+[OK] Record 683: Validado com sucesso.
+[OK] Record 685: Validado com sucesso.
+[OK] Record 686: Validado com sucesso.
+[OK] Record 687: Validado com sucesso.
+[OK] Record 688: Validado com sucesso.
+[OK] Record 689: Validado com sucesso.
+[OK] Record 690: Validado com sucesso.
+[OK] Record 691: Validado com sucesso.
+[OK] Record 694: Validado com sucesso.
+[OK] Record 695: Validado com sucesso.
+[OK] Record 696: Validado com sucesso.
+[OK] Record 697: Validado com sucesso.
+[OK] Record 699: Validado com sucesso.
+[OK] Record 700: Validado com sucesso.
+[OK] Record 701: Validado com sucesso.
+[OK] Record 702: Validado com sucesso.
+[OK] Record 703: Validado com sucesso.
+[OK] Record 704: Validado com sucesso.
+[OK] Record 705: Validado com sucesso.
+[OK] Record 706: Validado com sucesso.
+[OK] Record 707: Validado com sucesso.
+[OK] Record 708: Validado com sucesso.
+[OK] Record 709: Validado com sucesso.
+[OK] Record 711: Validado com sucesso.
+[OK] Record 712: Validado com sucesso.
+[OK] Record 713: Validado com sucesso.
+[OK] Record 716: Validado com sucesso.
+[OK] Record 717: Validado com sucesso.
+[OK] Record 718: Validado com sucesso.
+[OK] Record 719: Validado com sucesso.
+[OK] Record 720: Validado com sucesso.
+[OK] Record 721: Validado com sucesso.
+[OK] Record 722: Validado com sucesso.
+[OK] Record 723: Validado com sucesso.
+[OK] Record 724: Validado com sucesso.
+[OK] Record 725: Validado com sucesso.
+[OK] Record 726: Validado com sucesso.
+[OK] Record 727: Validado com sucesso.
+[OK] Record 728: Validado com sucesso.
+[OK] Record 729: Validado com sucesso.
+[OK] Record 730: Validado com sucesso.
+[OK] Record 731: Validado com sucesso.
+[OK] Record 732: Validado com sucesso.
+[OK] Record 734: Validado com sucesso.
+[ERRO] Record 735: Campos ausentes ou inválidos -> mun_notif_vio (deve ser 'RECIFE')
+[OK] Record 736: Validado com sucesso.
+[OK] Record 737: Validado com sucesso.
+[OK] Record 738: Validado com sucesso.
+[OK] Record 739: Validado com sucesso.
+
+------------------------------------------------------------
+RESUMO FINAL DA EXECUÇÃO
+Data/hora: 19/12/2025 11:54:05
+Total de notificações processadas: 50
+Total com status 'pendente': 49
+Total com status 'erro': 1
+------------------------------------------------------------

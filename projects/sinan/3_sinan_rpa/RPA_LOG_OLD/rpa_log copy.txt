@@ -1,0 +1,468 @@
+
+------------------------- LOGS DO DIA 2025-11-29 -------------------------
+
+2025-11-29 14:25:37 [DEBUG] - Starting new HTTP connection (1): localhost:8000
+2025-11-29 14:25:39 [DEBUG] - http://localhost:8000 "GET /notificacoes HTTP/1.1" 200 8432
+2025-11-29 14:25:39 [INFO] - Iniciando processamento da fila com 3 itens.
+2025-11-29 14:25:39 [INFO] - Iniciando item 1/3 - Agravo: VIOLENCIA_INTERPESSOAL_AUTOPROVOCADA
+2025-11-29 14:25:54 [INFO] - Realizando login com o usuário: ADMINISTRADOR
+2025-11-29 14:25:54 [INFO] - Senha do usuário: RODOVALHO21
+2025-11-29 14:26:10 [INFO] - Iniciando preenchimento da notificação: 1468517
+2025-11-29 14:26:10 [DEBUG] - Campos notificação: {'bairro_residencia': 'Cordeiro', 'distrito_residencia': '4', 'data_notificacao': '31032025', 'data_ocorrencia': '31032025', 'escolaridade': '99', 'gestante': '5', 'idade_calculada_notificador': '43', 'mun_notificacao_vio': 'recife', 'municipio_residencia': 'Recife', 'nome_mae': 'SIMONE RODRIGUES PINTO', 'nome_notificador': 'RAUANA HIPOLITO', 'nome_paciente': 'DEBORA MILENA RODRIGUES PINTO', 'nome_unidade_notificadora': 'secretaria de saude', 'raca': '1', 'sexo': 'F', 'cartao_sus': '706201553293063', 'telefone_uni_notif': '81', 'telefone': '81999191608', 'uf_residencia_vio': 'PE', 'unidade_notificadora': '7'}
+2025-11-29 14:26:11 [INFO] - Iniciando preenchimento da Pergunta 07 e 08 - Unidade de Saúde / Nome da Unidade.
+2025-11-29 14:26:11 [DEBUG] - [P-07] - Valor recebido para Unidade de Saúde / Nome da Unidade: 
+2025-11-29 14:26:11 [DEBUG] - [P-08] - Valor recebido para Unidade Notificadora: 7
+2025-11-29 14:26:11 [DEBUG] - Preenchendo Unidade Notificadora (código 7): secretaria de saude DO RECIFE
+2025-11-29 14:26:12 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:26:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:26:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:26:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:26:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:26:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:26:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:26:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:26:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:26:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:26:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:26:14 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:26:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:26:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:26:18 [DEBUG] - [P-12]Idade calculada/fornecida: 0
+2025-11-29 14:26:19 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:26:19 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:26:20 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:26:20 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:26:20 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:26:20 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:26:20 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:26:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:26:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:26:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:26:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:26:21 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:26:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:26:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:26:24 [DEBUG] - Mapeando Escolaridade: RedCap='99' -> SINAN='9'
+2025-11-29 14:26:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:26:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:26:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:26:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:26:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:26:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:26:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:26:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:26:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:26:27 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:26:27 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:26:27 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:26:27 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:26:27 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:26:27 [DEBUG] - Código do cartão SUS '706201553293063'
+2025-11-29 14:26:28 [DEBUG] - Preenchendo Nome da Mãe: SIMONE RODRIGUES PINTO
+2025-11-29 14:26:33 [DEBUG] - Município é RECIFE, preenchendo Distrito: %4%
+2025-11-29 14:26:33 [DEBUG] - Município é RECIFE, preenchendo Bairro: Cordeiro
+2025-11-29 14:26:34 [INFO] - Clicando para focar no campo 'Código' (x=685, y=507).
+2025-11-29 14:26:35 [DEBUG] - Pulando campo Código (vazio).
+2025-11-29 14:26:36 [DEBUG] - Pulando campo Geocampo1 (vazio).
+2025-11-29 14:26:36 [DEBUG] - Pulando campo Geocampo2 (vazio).
+2025-11-29 14:26:38 [DEBUG] - Idade calculada/fornecida: 43
+2025-11-29 14:26:38 [INFO] - Notificação preenchida. Iniciando investigação.
+2025-11-29 14:26:38 [DEBUG] - Campos investigação: {'suspeita_alcool': '9', 'bairro_ocorrencia': 'CORDEIRO', 'cep_ocor_vio2': '50721670', 'ciclo_vida_autor': '4', 'complemento_ocor_vio': 'CASA', 'deficiencia': '2', 'data_encerramento': '31032025', 'dt_nascimento_vio': '30101981', 'funcao_notificador': 'ASSITENTE SOCIAL', 'identidade_genero': '5', 'horario_ocorrencia': '20:00', 'lesao_autoprovocada': '2', 'local_ocorrencia': '1', 'endereco_ocorrencia': 'RUA MAXIMINO BUARQUE DE GUSMAO', 'logradouro_ocor_vio': 'RUA MAXIMINO BUARQUE DE GUSMAO', 'motivo_violencia': '1', 'municipio_ocorrencia': 'RECIFE', 'numero_envolvidos': '1', 'numero_ocorrencia': '149', 'numero_residencia_ocor_vio': '149', 'ocupacao': 'IGNORADO', 'orientacao_sexual': '5', 'relacao_trabalho': '9', 'sexo_agressor': '1', 'estado_civil': '2', 'situacao_rua_vio': '2', 'uf_notificacao_vio': 'PE', 'uf_ocorrencia': 'PE', 'ocorreu_outras_vezes': '2', 'tortura': '2', 'trafico_pessoas': '2', 'financeiro': '2', 'negligencia_abandono': '2', 'trabalho_infantil': '2', 'intervencao_legal': '2', 'outro_tipo_violencia': '2', 'forca_corporal_espancamento': '1', 'enforcamento': '2', 'objeto_contundente': '1', 'objeto_perfurante': '2', 'objeto_quente': '2', 'envenenamento': '2', 'arma_fogo': '2', 'ameaca': '2', 'outro_meio_agressao': '2', 'pai': '2', 'mae': '2', 'padrasto': '2', 'madrasta': '2', 'conjuge_parceiro': '2', 'ex_conjuge_parceiro': '1', 'namorado': '2', 'ex_namorado': '2', 'filho': '2', 'irmao': '2', 'amigos_conhecidos': '2', 'desconhecido': '2', 'cuidador': '2', 'patrao_chefe': '2', 'pessoa_relacao_instituicao': '2', 'policial_agente': '2', 'propria_pessoa': '2', 'outros_envolvidos': '2', 'rede_saude': '2', 'rede_assistencia_social': '2', 'rede_educacao': '2', 'rede_atendimento_mulher': '2', 'conselho_tutelar': '2', 'conselho_idoso': '2', 'delegacia_atendimento_idoso': '2', 'centro_ref_direitos_humanos': '2', 'ministerio_publico': '2', 'delegacia_especializada_infancia': '2', 'delegacia_atendimento_mulher': '1', 'outras_delegacias': '1', 'justica_infancia_juventude': '2', 'defensoria_publica': '2', 'fisica': '1', 'moral_psicologica': '2'}
+2025-11-29 14:26:38 [DEBUG] - Idade recebida para investigação: 43
+2025-11-29 14:26:39 [DEBUG] - Preenchendo P35 Estado Civil: 2
+2025-11-29 14:26:39 [DEBUG] - Preenchendo P36 Orientação Sexual: 9
+2025-11-29 14:26:40 [DEBUG] - Preenchendo P37 Identidade de Gênero: 9
+2025-11-29 14:26:41 [DEBUG] - Campos (38) DEFICIÊNCIA preenchido: 2
+2025-11-29 14:26:41 [DEBUG] - (TAB 03 ) Deficiência marcada como 'Não' ou 'Ignorado'. Pulando detalhes da P39.
+2025-11-29 14:26:41 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:26:42 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:26:42 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:26:42 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:26:42 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:26:42 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:26:43 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:26:43 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:26:43 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:26:43 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:26:43 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:26:43 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:26:43 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:26:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:26:44 [DEBUG] - Campos (40) UF OCORRÊNCIA - (antes): PE
+2025-11-29 14:26:44 [DEBUG] - Campos (40) UF OCORRÊNCIA - (depois): PE
+2025-11-29 14:26:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:26:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:26:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:26:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:26:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:26:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:26:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:26:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:26:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:26:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:26:47 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:26:47 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:26:47 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:26:47 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:26:47 [INFO] - Preenchendo Município Ocorrência (P41): %RECIFE%
+2025-11-29 14:26:52 [DEBUG] - Mapeando Local da Ocorrência: RedCap='1' -> SINAN='01'
+2025-11-29 14:26:53 [DEBUG] - Campos (53) Ocorreu outras vezes preenchido: 2
+2025-11-29 14:27:06 [INFO] - [Pergunta 57.9 Número] Preenchido com: 2
+2025-11-29 14:27:08 [INFO] - Primeira execução e valor != '1': realizando clique de ajuste em (671, 505).
+2025-11-29 14:27:08 [DEBUG] - Condição atendida: primeira_execucao=True, valor_outro_meio='2'
+2025-11-29 14:27:11 [INFO] - [Pergunta 60 ] NUmero de envolvidos: 1
+2025-11-29 14:27:23 [DEBUG] - Preenchendo o campo 'sexo_agressor'.
+2025-11-29 14:27:36 [DEBUG] - [Pergunta 69] Campos (Data de Encerramento): 31032025
+2025-11-29 14:27:36 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:27:36 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:27:37 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:27:37 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:27:37 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:27:37 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:27:37 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:27:38 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:27:38 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:27:38 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:27:38 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:27:38 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:27:38 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:27:38 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:27:38 [INFO] - Preenchimento completo. Tentando salvar formulário.
+2025-11-29 14:27:41 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\salvar.png
+2025-11-29 14:27:41 [INFO] - Clicado em salvar. Aguardando confirmação.
+2025-11-29 14:27:43 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png
+2025-11-29 14:27:43 [INFO] - Primeiro 'ok' clicado com sucesso.
+2025-11-29 14:27:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:27:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:27:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:27:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:27:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:27:44 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:27:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:27:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:27:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:27:45 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:27:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:27:46 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:27:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:27:46 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:27:48 [INFO] - Verificando existência da segunda confirmação ('ok').
+2025-11-29 14:27:48 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png
+2025-11-29 14:27:48 [INFO] - Segundo 'ok' clicado com sucesso.
+2025-11-29 14:27:52 [INFO] - Aguardando janela 'Deseja incluir nova notificação deste agravo?'.
+2025-11-29 14:27:52 [INFO] - Encontrada tela 'Deseja incluir nova notificação deste agravo?'.
+2025-11-29 14:27:52 [INFO] - Clicando em 'Sim' para novo formulário.
+2025-11-29 14:27:53 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\sim.png
+2025-11-29 14:27:53 [DEBUG] - Starting new HTTP connection (1): localhost:8000
+2025-11-29 14:27:55 [DEBUG] - http://localhost:8000 "PATCH /notificacoes/1468517 HTTP/1.1" 200 75
+2025-11-29 14:27:55 [INFO] - Status atualizado na API para a notificação 1468517.
+2025-11-29 14:27:55 [INFO] - Item 1 processado com sucesso!
+2025-11-29 14:27:58 [INFO] - Iniciando item 2/3 - Agravo: VIOLENCIA_INTERPESSOAL_AUTOPROVOCADA
+2025-11-29 14:27:58 [INFO] - Iniciando preenchimento da notificação: 4741223
+2025-11-29 14:27:58 [DEBUG] - Campos notificação: {'bairro_residencia': 'Jardim Sao Paulo', 'distrito_residencia': '5', 'data_notificacao': '13032025', 'data_ocorrencia': '12032025', 'escolaridade': '8', 'gestante': '5', 'idade_calculada_notificador': '31', 'mun_notificacao_vio': 'RECIFE', 'municipio_residencia': 'Recife', 'nome_mae': 'IVANILDA LOPES DA SILVA', 'nome_notificador': 'LUCIENE MARIA', 'nome_paciente': 'LUANA MARCELA LOPES DA SILVA', 'nome_unidade_notificadora': 'SECRETARIA DE SAUDE', 'raca': '4', 'sexo': 'F', 'telefone_uni_notif': '33551884', 'telefone': '81999023294', 'uf_residencia_vio': 'PE', 'unidade_notificadora': '7'}
+2025-11-29 14:28:00 [INFO] - Iniciando preenchimento da Pergunta 07 e 08 - Unidade de Saúde / Nome da Unidade.
+2025-11-29 14:28:00 [DEBUG] - [P-07] - Valor recebido para Unidade de Saúde / Nome da Unidade: 
+2025-11-29 14:28:00 [DEBUG] - [P-08] - Valor recebido para Unidade Notificadora: 7
+2025-11-29 14:28:00 [DEBUG] - Preenchendo Unidade Notificadora (código 7): SECRETARIA DE SAUDE DO RECIFE
+2025-11-29 14:28:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:28:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:28:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:28:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:28:02 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:28:02 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:28:02 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:28:02 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:28:02 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:28:03 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:28:03 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:28:03 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:28:03 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:28:03 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:28:07 [DEBUG] - [P-12]Idade calculada/fornecida: 0
+2025-11-29 14:28:08 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:28:08 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:28:08 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:28:08 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:28:09 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:28:09 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:28:09 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:28:09 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:28:09 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:28:10 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:28:10 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:28:10 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:28:10 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:28:10 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:28:12 [DEBUG] - Mapeando Escolaridade: RedCap='8' -> SINAN='7'
+2025-11-29 14:28:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:28:13 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:28:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:28:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:28:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:28:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:28:14 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:28:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:28:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:28:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:28:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:28:15 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:28:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:28:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:28:16 [DEBUG] - Preenchendo Nome da Mãe: IVANILDA LOPES DA SILVA
+2025-11-29 14:28:21 [DEBUG] - Município é RECIFE, preenchendo Distrito: %5%
+2025-11-29 14:28:22 [DEBUG] - Município é RECIFE, preenchendo Bairro: Jardim Sao Paulo
+2025-11-29 14:28:22 [INFO] - Clicando para focar no campo 'Código' (x=685, y=507).
+2025-11-29 14:28:23 [DEBUG] - Pulando campo Código (vazio).
+2025-11-29 14:28:24 [DEBUG] - Pulando campo Geocampo1 (vazio).
+2025-11-29 14:28:24 [DEBUG] - Pulando campo Geocampo2 (vazio).
+2025-11-29 14:28:27 [DEBUG] - Idade calculada/fornecida: 31
+2025-11-29 14:28:27 [INFO] - Notificação preenchida. Iniciando investigação.
+2025-11-29 14:28:27 [DEBUG] - Campos investigação: {'suspeita_alcool': '1', 'bairro_ocorrencia': 'JARDIM SAO PAULO', 'ciclo_vida_autor': '4', 'deficiencia': '2', 'data_encerramento': '13032025', 'dt_nascimento_vio': '16051993', 'funcao_notificador': 'ASSISTENCIA SOCIAL', 'identidade_genero': '2', 'horario_ocorrencia': '01:00', 'lesao_autoprovocada': '2', 'local_ocorrencia': '1', 'endereco_ocorrencia': 'RUA TOPAZIO', 'logradouro_ocor_vio': 'RUA TOPAZIO', 'motivo_violencia': '1', 'municipio_ocorrencia': 'RECIFE', 'numero_envolvidos': '1', 'numero_ocorrencia': '41', 'numero_residencia_ocor_vio': '41', 'ocupacao': 'CABELEIREIRA', 'orientacao_sexual': '1', 'relacao_trabalho': '9', 'sexo_agressor': '1', 'estado_civil': '1', 'situacao_rua_vio': '2', 'uf_notificacao_vio': 'PE', 'uf_ocorrencia': 'PE', 'ocorreu_outras_vezes': '1', 'tortura': '2', 'trafico_pessoas': '2', 'financeiro': '2', 'negligencia_abandono': '2', 'trabalho_infantil': '2', 'intervencao_legal': '2', 'outro_tipo_violencia': '2', 'forca_corporal_espancamento': '1', 'enforcamento': '2', 'objeto_contundente': '2', 'objeto_perfurante': '2', 'objeto_quente': '2', 'envenenamento': '2', 'arma_fogo': '2', 'ameaca': '1', 'outro_meio_agressao': '2', 'pai': '2', 'mae': '2', 'padrasto': '2', 'madrasta': '2', 'conjuge_parceiro': '2', 'ex_conjuge_parceiro': '1', 'namorado': '2', 'ex_namorado': '2', 'filho': '2', 'irmao': '2', 'amigos_conhecidos': '2', 'desconhecido': '2', 'cuidador': '2', 'patrao_chefe': '2', 'pessoa_relacao_instituicao': '2', 'policial_agente': '2', 'propria_pessoa': '2', 'outros_envolvidos': '2', 'rede_saude': '2', 'rede_assistencia_social': '2', 'rede_educacao': '2', 'rede_atendimento_mulher': '1', 'conselho_tutelar': '2', 'conselho_idoso': '2', 'delegacia_atendimento_idoso': '2', 'centro_ref_direitos_humanos': '2', 'ministerio_publico': '2', 'delegacia_especializada_infancia': '2', 'delegacia_atendimento_mulher': '1', 'outras_delegacias': '2', 'justica_infancia_juventude': '2', 'defensoria_publica': '2', 'fisica': '1', 'moral_psicologica': '1'}
+2025-11-29 14:28:27 [DEBUG] - Idade recebida para investigação: 31
+2025-11-29 14:28:27 [DEBUG] - Preenchendo P35 Estado Civil: 1
+2025-11-29 14:28:28 [DEBUG] - Preenchendo P36 Orientação Sexual: 1
+2025-11-29 14:28:28 [DEBUG] - Preenchendo P37 Identidade de Gênero: 2
+2025-11-29 14:28:29 [DEBUG] - Campos (38) DEFICIÊNCIA preenchido: 2
+2025-11-29 14:28:29 [DEBUG] - (TAB 03 ) Deficiência marcada como 'Não' ou 'Ignorado'. Pulando detalhes da P39.
+2025-11-29 14:28:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:28:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:28:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:28:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:28:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:28:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:28:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:28:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:28:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:28:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:28:32 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:28:32 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:28:32 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:28:32 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:28:32 [DEBUG] - Campos (40) UF OCORRÊNCIA - (antes): PE
+2025-11-29 14:28:32 [DEBUG] - Campos (40) UF OCORRÊNCIA - (depois): PE
+2025-11-29 14:28:33 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:28:33 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:28:33 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:28:33 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:28:33 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:28:34 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:28:34 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:28:34 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:28:34 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:28:34 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:28:35 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:28:35 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:28:35 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:28:35 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:28:35 [INFO] - Preenchendo Município Ocorrência (P41): %RECIFE%
+2025-11-29 14:28:40 [DEBUG] - Mapeando Local da Ocorrência: RedCap='1' -> SINAN='01'
+2025-11-29 14:28:41 [DEBUG] - Campos (53) Ocorreu outras vezes preenchido: 1
+2025-11-29 14:28:54 [INFO] - [Pergunta 57.9 Número] Preenchido com: 2
+2025-11-29 14:28:56 [DEBUG] - Condição ignorada: primeira_execucao=False, valor_outro_meio='2'
+2025-11-29 14:28:58 [INFO] - [Pergunta 60 ] NUmero de envolvidos: 1
+2025-11-29 14:29:09 [DEBUG] - Preenchendo o campo 'sexo_agressor'.
+2025-11-29 14:29:22 [DEBUG] - [Pergunta 69] Campos (Data de Encerramento): 13032025
+2025-11-29 14:29:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:29:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:29:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:29:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:29:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:29:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:29:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:29:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:29:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:29:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:29:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:29:24 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:29:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:29:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:29:25 [INFO] - Preenchimento completo. Tentando salvar formulário.
+2025-11-29 14:29:27 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\salvar.png
+2025-11-29 14:29:27 [INFO] - Clicado em salvar. Aguardando confirmação.
+2025-11-29 14:29:29 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png
+2025-11-29 14:29:29 [INFO] - Primeiro 'ok' clicado com sucesso.
+2025-11-29 14:29:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:29:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:29:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:29:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:29:30 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:29:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:29:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:29:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:29:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:29:31 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:29:32 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:29:32 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:29:32 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:29:32 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:29:34 [INFO] - Verificando existência da segunda confirmação ('ok').
+2025-11-29 14:29:34 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:35 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:35 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:36 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:36 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:37 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:38 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:38 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:39 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:39 [ERROR] - Erro pyautogui ao processar c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png: 
+2025-11-29 14:29:39 [DEBUG] - Timeout ao procurar imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png
+2025-11-29 14:29:39 [INFO] - Segunda janela 'ok' não apareceu. Continuando sem clicar.
+2025-11-29 14:29:43 [INFO] - Aguardando janela 'Deseja incluir nova notificação deste agravo?'.
+2025-11-29 14:29:44 [INFO] - Encontrada tela 'Deseja incluir nova notificação deste agravo?'.
+2025-11-29 14:29:44 [INFO] - Clicando em 'Sim' para novo formulário.
+2025-11-29 14:29:44 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\sim.png
+2025-11-29 14:29:44 [DEBUG] - Starting new HTTP connection (1): localhost:8000
+2025-11-29 14:29:46 [DEBUG] - http://localhost:8000 "PATCH /notificacoes/4741223 HTTP/1.1" 200 75
+2025-11-29 14:29:46 [INFO] - Status atualizado na API para a notificação 4741223.
+2025-11-29 14:29:46 [INFO] - Item 2 processado com sucesso!
+2025-11-29 14:29:49 [INFO] - Iniciando item 3/3 - Agravo: VIOLENCIA_INTERPESSOAL_AUTOPROVOCADA
+2025-11-29 14:29:49 [INFO] - Iniciando preenchimento da notificação: 7517186
+2025-11-29 14:29:49 [DEBUG] - Campos notificação: {'bairro_residencia': 'Santo Amaro', 'distrito_residencia': '1', 'data_notificacao': '21032025', 'data_ocorrencia': '21032025', 'escolaridade': '5', 'gestante': '5', 'idade_calculada_notificador': '13', 'mun_notificacao_vio': 'RECIFE', 'municipio_residencia': 'Recife', 'nome_mae': 'NEIDE AZEVEDO LIMA', 'nome_paciente': 'CINTIA CAMILA AZEVEDO LIMA', 'nome_unidade_notificadora': 'SECRETARIA DE SAUDE', 'raca': '1', 'sexo': 'F', 'cartao_sus': '708007834576720', 'telefone_uni_notif': '33551884', 'telefone': '81000000000000000000000000000000000000', 'uf_residencia_vio': 'PE', 'unidade_notificadora': '7'}
+2025-11-29 14:29:51 [INFO] - Iniciando preenchimento da Pergunta 07 e 08 - Unidade de Saúde / Nome da Unidade.
+2025-11-29 14:29:51 [DEBUG] - [P-07] - Valor recebido para Unidade de Saúde / Nome da Unidade: 
+2025-11-29 14:29:51 [DEBUG] - [P-08] - Valor recebido para Unidade Notificadora: 7
+2025-11-29 14:29:51 [DEBUG] - Preenchendo Unidade Notificadora (código 7): SECRETARIA DE SAUDE DO RECIFE
+2025-11-29 14:29:52 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:29:52 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:29:53 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:29:53 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:29:53 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:29:53 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:29:53 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:29:54 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:29:54 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:29:54 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:29:54 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:29:54 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:29:54 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:29:54 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:29:58 [DEBUG] - [P-12]Idade calculada/fornecida: 0
+2025-11-29 14:29:59 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:29:59 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:29:59 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:30:00 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:30:00 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:30:00 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:30:00 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:30:00 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:30:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:30:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:30:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:30:01 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:30:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:30:01 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:30:04 [DEBUG] - Mapeando Escolaridade: RedCap='5' -> SINAN='4'
+2025-11-29 14:30:05 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:30:05 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:30:05 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:30:05 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:30:05 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:30:06 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:30:06 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:30:06 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:30:06 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:30:06 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:30:07 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:30:07 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:30:07 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:30:07 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:30:07 [DEBUG] - Código do cartão SUS '708007834576720'
+2025-11-29 14:30:07 [DEBUG] - Preenchendo Nome da Mãe: NEIDE AZEVEDO LIMA
+2025-11-29 14:30:13 [DEBUG] - Município é RECIFE, preenchendo Distrito: %1%
+2025-11-29 14:30:13 [DEBUG] - Município é RECIFE, preenchendo Bairro: Santo Amaro
+2025-11-29 14:30:14 [INFO] - Clicando para focar no campo 'Código' (x=685, y=507).
+2025-11-29 14:30:15 [DEBUG] - Pulando campo Código (vazio).
+2025-11-29 14:30:16 [DEBUG] - Pulando campo Geocampo1 (vazio).
+2025-11-29 14:30:16 [DEBUG] - Pulando campo Geocampo2 (vazio).
+2025-11-29 14:30:18 [DEBUG] - Idade calculada/fornecida: 13
+2025-11-29 14:30:18 [INFO] - Notificação preenchida. Iniciando investigação.
+2025-11-29 14:30:18 [DEBUG] - Campos investigação: {'suspeita_alcool': '9', 'bairro_ocorrencia': 'SANTO AMARO', 'cep_ocor_vio2': '50100170', 'ciclo_vida_autor': '2', 'deficiencia': '9', 'data_encerramento': '21032025', 'dt_nascimento_vio': '21062011', 'identidade_genero': '5', 'lesao_autoprovocada': '1', 'local_ocorrencia': '1', 'endereco_ocorrencia': 'RUA DO POMBAL', 'logradouro_ocor_vio': 'RUA DO POMBAL', 'motivo_violencia': '99', 'municipio_ocorrencia': 'RECIFE', 'numero_envolvidos': '1', 'numero_ocorrencia': '602', 'numero_residencia_ocor_vio': '602', 'orientacao_sexual': '5', 'esp_outro_tipo_violencia': 'TENTATIVA DE SUICIDIO', 'relacao_trabalho': '9', 'sexo_agressor': '1', 'estado_civil': '4', 'situacao_rua_vio': '2', 'uf_notificacao_vio': 'PE', 'uf_ocorrencia': 'PE', 'ocorreu_outras_vezes': '9', 'tortura': '2', 'trafico_pessoas': '2', 'financeiro': '2', 'negligencia_abandono': '2', 'trabalho_infantil': '2', 'intervencao_legal': '2', 'outro_tipo_violencia': '1', 'forca_corporal_espancamento': '2', 'enforcamento': '2', 'objeto_contundente': '2', 'objeto_perfurante': '2', 'objeto_quente': '2', 'envenenamento': '1', 'arma_fogo': '2', 'ameaca': '2', 'outro_meio_agressao': '2', 'pai': '2', 'mae': '2', 'padrasto': '2', 'madrasta': '2', 'conjuge_parceiro': '2', 'ex_conjuge_parceiro': '2', 'namorado': '2', 'ex_namorado': '2', 'filho': '2', 'irmao': '2', 'amigos_conhecidos': '2', 'desconhecido': '2', 'cuidador': '2', 'patrao_chefe': '2', 'pessoa_relacao_instituicao': '2', 'policial_agente': '2', 'propria_pessoa': '1', 'outros_envolvidos': '2', 'rede_saude': '2', 'rede_assistencia_social': '2', 'rede_educacao': '2', 'rede_atendimento_mulher': '2', 'conselho_tutelar': '2', 'conselho_idoso': '2', 'delegacia_atendimento_idoso': '2', 'centro_ref_direitos_humanos': '2', 'ministerio_publico': '2', 'delegacia_especializada_infancia': '2', 'delegacia_atendimento_mulher': '2', 'outras_delegacias': '2', 'justica_infancia_juventude': '2', 'defensoria_publica': '2', 'fisica': '2', 'moral_psicologica': '2'}
+2025-11-29 14:30:18 [DEBUG] - Idade recebida para investigação: 13
+2025-11-29 14:30:19 [DEBUG] - Preenchendo P35 Estado Civil: 4
+2025-11-29 14:30:19 [DEBUG] - Preenchendo P36 Orientação Sexual: 9
+2025-11-29 14:30:20 [DEBUG] - Preenchendo P37 Identidade de Gênero: 9
+2025-11-29 14:30:21 [DEBUG] - Campos (38) DEFICIÊNCIA preenchido: 9
+2025-11-29 14:30:21 [DEBUG] - (TAB 03 ) Deficiência marcada como 'Não' ou 'Ignorado'. Pulando detalhes da P39.
+2025-11-29 14:30:21 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:30:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:30:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:30:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:30:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:30:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:30:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:30:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:30:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:30:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:30:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:30:23 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:30:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:30:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:30:24 [DEBUG] - Campos (40) UF OCORRÊNCIA - (antes): PE
+2025-11-29 14:30:24 [DEBUG] - Campos (40) UF OCORRÊNCIA - (depois): PE
+2025-11-29 14:30:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:30:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:30:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:30:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:30:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:30:25 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:30:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:30:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:30:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:30:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:30:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:30:26 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:30:26 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:30:27 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:30:27 [INFO] - Preenchendo Município Ocorrência (P41): %RECIFE%
+2025-11-29 14:30:32 [DEBUG] - Mapeando Local da Ocorrência: RedCap='1' -> SINAN='01'
+2025-11-29 14:30:32 [DEBUG] - Campos (53) Ocorreu outras vezes preenchido: 9
+2025-11-29 14:30:46 [INFO] - [Pergunta 57.9 Número] Preenchido com: 2
+2025-11-29 14:30:48 [DEBUG] - Condição ignorada: primeira_execucao=False, valor_outro_meio='2'
+2025-11-29 14:30:50 [INFO] - [Pergunta 60 ] NUmero de envolvidos: 1
+2025-11-29 14:31:01 [DEBUG] - Preenchendo o campo 'sexo_agressor'.
+2025-11-29 14:31:14 [DEBUG] - [Pergunta 69] Campos (Data de Encerramento): 21032025
+2025-11-29 14:31:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:31:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:31:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:31:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:31:15 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:31:16 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:31:16 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:31:16 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:31:16 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:31:16 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:31:17 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:31:17 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:31:17 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:31:17 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:31:17 [INFO] - Preenchimento completo. Tentando salvar formulário.
+2025-11-29 14:31:19 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\salvar.png
+2025-11-29 14:31:19 [INFO] - Clicado em salvar. Aguardando confirmação.
+2025-11-29 14:31:22 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png
+2025-11-29 14:31:22 [INFO] - Primeiro 'ok' clicado com sucesso.
+2025-11-29 14:31:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-01-atencao.png: 
+2025-11-29 14:31:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-02-atencao.png: 
+2025-11-29 14:31:22 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-03-informacoes.png: 
+2025-11-29 14:31:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-04-popup.png: 
+2025-11-29 14:31:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-intem_ja_cadastrado.png: 
+2025-11-29 14:31:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-05-popup.png: 
+2025-11-29 14:31:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-06-opcao-invalida.png: 
+2025-11-29 14:31:23 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-07-atencao_uf.png: 
+2025-11-29 14:31:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-08-atencao_so_recebe_valores_numericos.png: 
+2025-11-29 14:31:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-10-dt_nascimento_ou_idade_obrigatorio.png: 
+2025-11-29 14:31:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-11-dt_invalida.png: 
+2025-11-29 14:31:24 [ERROR] - Template c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png não pôde ser lido (arquivo ausente ou corrompido).
+2025-11-29 14:31:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-idade_inferior_ou_superior.png: Failed to read c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\erro-12-idade_inferior_ou_superior.png because file is missing, has improper permissions, or is an unsupported or invalid format
+2025-11-29 14:31:24 [ERROR] - Falha na detecção [ PyAutoGUI ] FALLBACK do template erro-12-_idade_inferior_ou_superior.jpg: 
+2025-11-29 14:31:26 [INFO] - Verificando existência da segunda confirmação ('ok').
+2025-11-29 14:31:27 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\ok.png
+2025-11-29 14:31:27 [INFO] - Segundo 'ok' clicado com sucesso.
+2025-11-29 14:31:31 [INFO] - Aguardando janela 'Deseja incluir nova notificação deste agravo?'.
+2025-11-29 14:31:31 [INFO] - Encontrada tela 'Deseja incluir nova notificação deste agravo?'.
+2025-11-29 14:31:31 [INFO] - Clicando em 'Não' para fechar formulário.
+2025-11-29 14:31:31 [DEBUG] - Encontrou e clicou na imagem: c:\Users\User\Documents\sec_saude\sinan\3_sinan_rpa\imagens\nao.png
+2025-11-29 14:31:31 [DEBUG] - Starting new HTTP connection (1): localhost:8000
+2025-11-29 14:31:33 [DEBUG] - http://localhost:8000 "PATCH /notificacoes/7517186 HTTP/1.1" 200 75
+2025-11-29 14:31:33 [INFO] - Status atualizado na API para a notificação 7517186.
+2025-11-29 14:31:33 [INFO] - Item 3 processado com sucesso!

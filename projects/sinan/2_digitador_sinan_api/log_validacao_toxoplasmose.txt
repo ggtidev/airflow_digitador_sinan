@@ -1,0 +1,13 @@
+==== LOG DE VALIDAÇÃO - TOXOPLASMOSE CONGÊNITA ====
+Data e hora da execução: 12/03/2026 09:31:53
+------------------------------------------------------------
+
+[ERRO] Record 743: Campos ausentes ou inválidos -> dt_not_toxo, uf_notif_toxo, mun_notif_toxo, un_not_toxo, us_toxo (unidade ausente)
+
+------------------------------------------------------------
+RESUMO FINAL DA EXECUÇÃO - TOXOPLASMOSE CONGÊNITA
+Data/hora: 12/03/2026 09:31:53
+Total de notificações processadas: 1
+Total com status 'pendente': 0
+Total com status 'erro': 1
+------------------------------------------------------------

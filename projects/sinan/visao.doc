@@ -1,0 +1,65 @@
+Visão Geral
+O projeto é um pipeline de automação dividido em três componentes independentes que trabalham em sequência: um ETL para buscar os dados, uma API para gerenciá-los e um Robô (RPA) para inseri-los no sistema de destino.
+
+Etapa 1: ETL RedCap (1_etl_redcap_sinan)
+Este componente é o Coletor de Dados. Sua única função é buscar as informações mais recentes do RedCap e prepará-las para a próxima etapa.
+
+Como funciona:
+
+Execução: É um script Python (redcap.py) que você roda manualmente ou de forma agendada.
+
+Conexão: Ele lê o arquivo .env para obter a URL e o token da API do RedCap, além das credenciais do banco de dados PostgreSQL.
+
+Extração: O script faz uma chamada para a API do RedCap e baixa todos os registros de notificações.
+
+Transformação: Utilizando a biblioteca Pandas, ele carrega esses dados, limpa-os e renomeia as colunas para um formato padronizado.
+
+Carga: Ele se conecta ao banco de dados PostgreSQL (que pode ser iniciado com o docker-compose.yml do projeto), apaga todos os dados da tabela de notificações (TRUNCATE) e insere a nova carga de dados recém-baixada.
+
+Resultado: Ao final desta etapa, o banco de dados contém uma cópia limpa e atualizada de todas as notificações do RedCap, pronta para ser consumida.
+
+Etapa 2: API (2_digitador_sinan_api)
+Este componente é o Gerente de Tarefas ou a "ponte" entre os dados e o robô. Ele controla o fluxo de trabalho, entregando as notificações pendentes e registrando o que já foi feito.
+
+Como funciona:
+
+Execução: É uma API web construída com FastAPI, projetada para rodar continuamente. O método ideal de execução é através do docker-compose.yml, que sobe tanto a API quanto seu próprio banco de dados de forma isolada.
+
+Conexão: A API se conecta ao banco de dados que foi populado pela Etapa 1.
+
+Endpoints: Ela expõe URLs (endpoints) que o robô pode chamar:
+
+Um endpoint para buscar a lista de todas as notificações que ainda não foram processadas.
+
+Um endpoint para atualizar o status de uma notificação para "processado" depois que o robô termina seu trabalho com sucesso.
+
+Persistência: Ele usa o Alembic para gerenciar as versões do banco de dados, permitindo que a estrutura das tabelas seja atualizada de forma controlada.
+
+Resultado: Uma API robusta que serve como um ponto central de controle, garantindo que o robô saiba exatamente o que fazer e que nenhuma notificação seja processada duas vezes.
+
+Etapa 3: Robô RPA (3_sinan_rpa)
+Este componente é o Trabalhador Digital. Ele simula as ações de um ser humano para inserir os dados no sistema SINAN, que não possui uma API.
+
+Como funciona:
+
+Execução: É um script Python (main.py) que você roda na máquina que tem acesso ao sistema SINAN.
+
+Busca de Tarefas: Ao iniciar, o primeiro passo do robô é chamar a API da Etapa 2 para pedir a lista de notificações pendentes.
+
+Automação de Tela: Para cada notificação recebida, o robô:
+
+Abre o sistema SINAN.
+
+Navega pelos menus até chegar ao formulário correto.
+
+Utiliza a biblioteca pyautogui para encontrar os campos e botões na tela. Ele faz isso comparando pequenas imagens (ex: salvar.png, ok.png) salvas na pasta imagens/ com o que está visível no monitor.
+
+A lógica de busca e clique fica na função find_and_click do arquivo utils.py.
+
+Ele "digita" as informações do paciente em cada campo do formulário. A lógica específica do preenchimento fica em scripts como agravosscripts/violencia.py.
+
+Feedback: Após preencher e salvar um formulário com sucesso no SINAN, o robô faz uma segunda chamada à API da Etapa 2 para marcar aquela notificação como "processada".
+
+Logging: Todas as ações importantes do robô (início, sucesso, erros) são gravadas em um arquivo de log (rpa_log.txt) para fácil depuração, conforme configurado no logger.py.
+
+Resultado: A automação completa do processo de digitação, eliminando o trabalho manual, reduzindo erros e liberando tempo da equipe.

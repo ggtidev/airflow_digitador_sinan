@@ -1,0 +1,35 @@
+﻿arquivo,resultado,detalhes,tempo_segundos
+erro-01-atencao.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13
+erro-02-atencao.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.12
+erro-03-informacoes.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.17
+erro-04-popup.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.32
+erro-05-intem_ja_cadastrado.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.16
+erro-05-popup.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.11
+erro-06-opcao-invalida.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13
+erro-07-atencao_uf.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13
+erro-08-atencao_so_recebe_valores_numericos.png,ENCONTRADO,Screenshot salva em achado_erro-08-atencao_so_recebe_valores_numericos_20251117_142014.png,0.27
+erro-09-campo_preenchiento_obrigatorio.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.22
+erro-10-dt_nascimento_ou_idade_obrigatorio.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.19
+erro-11-dt_invalida.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.12
+erro-12-_idade_inferior_ou_superior.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.11
+erro_inferior_1_ano_superior_98_anos.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.09
+informacao_errada_02.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.14
+menu_agravo.png,ENCONTRADO,Screenshot salva em achado_menu_agravo_20251117_142020.png,0.34
+nao.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.12
+nmr_notificacao_preenchimento_obg.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.14
+notificacao.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.09
+novo_ou_nao.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.32
+ok.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.1
+ok_listra.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13
+Pergunta_34.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.34
+sair.png,ENCONTRADO,Screenshot salva em achado_sair_20251117_142026.png,0.15
+salvar.png,ENCONTRADO,Screenshot salva em achado_salvar_20251117_142028.png,0.09
+salvar_ficha.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13
+Screenshot_1.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.17
+sim.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.18
+sinan-oooo.png,ENCONTRADO,Screenshot salva em achado_sinan-oooo_20251117_142031.png,0.22
+tela_final_inclu.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13
+tela_login.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.11
+tela_notificacao_individual.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.29
+tela_principal.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.16
+usuario-senha-invalidos.png,NÃO ENCONTRADO,"Imagem válida, mas não visível na tela.",0.13

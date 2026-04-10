@@ -1,0 +1,25 @@
+{
+  "botoes": {
+    "salvar": "imagens/salvar.png",
+    "ok": "imagens/ok.png",
+    "menu_agravo": "imagens/menu_agravo.png", 
+    "notificacao": "imagens/notificacao.png"
+  },
+  "telas": {
+    "tela_login": "imagens/tela_login.png",
+    "tela_principal": "imagens/tela_principal.png",
+    "tela_notificacao_individual": "imagens/tela_notificacao_individual.png",
+    "tela_novo_ou_nao": "imagens/novo_ou_nao.png"
+  },
+  "erros": {
+    "atencao_escolaridade": "imagens/erro-01-atencao.png",
+    "atencao_municipio": "imagens/erro-02-atencao.png",
+    "info_escolaridade": "imagens/erro-03-informacoes.png",
+    "popup_cnes_vazio": "imagens/erro-04-popup.png",
+    "confirmacao_ficha": "imagens/salvar_ficha.png",
+    "erro_pop_vazio": "imagens/erro-05-popup.png",
+    "erro_opcao_invalida": "imagens/erro-06-opcao-invalida.png",
+    "atencao_uf": "imagens/erro-07-atencao_uf.png", 
+    "atencao_so_recebe_valores_numericos": "imagens/erro-08-atencao_so_recebe_valores_numericos.png"
+  }
+}

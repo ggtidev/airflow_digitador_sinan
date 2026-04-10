@@ -1,0 +1,5 @@
+.env
+venv
+.venv
+rpa_log.txt
+__pycache__/

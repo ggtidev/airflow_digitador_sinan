@@ -1,0 +1,116 @@
+# ============================================================
+
+# 🧩 SINAN-RPA - Dependências Principais (versão compatível com Python 3.13)
+
+# ============================================================
+
+# Sistema: Windows 11 x64
+# Ambiente: venv do Python 3.13.9
+
+# ------------------------------------------------------------
+
+# Este arquivo cobre todas as bibliotecas usadas nos módulos:
+# - utils.py
+# - TesteOpenCV_validar_templates.py
+# - violencia.py
+# - main.py
+
+# ------------------------------------------------------------
+
+# ============================================================
+
+# 🔹 Automação e captura de tela (Mouse/Teclado/Imagem)
+
+# ============================================================
+
+pyautogui==0.9.54
+pyscreeze==0.1.30
+pillow==10.4.0
+
+# ============================================================
+
+# 🔹 OpenCV + NumPy (visão computacional)
+
+# ============================================================
+
+opencv-python
+opencv-contrib-python
+numpy==2.3.1
+
+# ============================================================
+
+# 🔹 Manipulação de dados, Banco de Dados e exportação de relatórios
+
+# ============================================================
+
+pandas==2.2.3
+# Bibliotecas para conexão de Banco de Dados e manipulação de arquivos
+sqlalchemy
+psycopg2
+openpyxl
+
+# (openpyxl é necessário para o pandas exportar .xlsx)
+
+# ============================================================
+
+# 🔹 Variáveis de ambiente e API
+
+# ============================================================
+
+python-dotenv==1.0.1
+requests==2.32.3
+
+# ============================================================
+
+# 🔹 Entrada de teclado e eventos (Hooks globais)
+
+# ============================================================
+
+keyboard==0.13.5
+
+# ============================================================
+
+# 🔹 Captura de tela ultrarrápida (Visão Computacional)
+
+# ============================================================
+
+mss==9.0.1
+# python-mss foi removido pois causa erro de distribuição em Python 3.13.
+
+# (Nota: no pip o pacote chama-se 'python-mss', mas no código usa-se 'import mss')
+
+# ============================================================
+
+# 🔹 Monitoramento de Recursos do Sistema
+
+# ============================================================
+
+psutil
+
+# ============================================================
+
+# 🔹 Observações de Instalação
+
+# ============================================================
+
+# - Compatível com Python 3.10 a 3.13 no Windows 11.
+
+# - Caso apareçam erros de compilação (especialmente no mss ou opencv),
+# instale o Visual Studio Build Tools:
+# https://visualstudio.microsoft.com/visual-cpp-build-tools/
+# (Selecione “Desktop development with C++” + “Windows 11 SDK”)
+
+# - Para instalar tudo de uma vez:
+# pip install -r requirements.txt
+
+# - Validação pós-instalação:
+# python -c "import cv2, numpy, pandas, PIL, mss, psutil, sqlalchemy, psycopg2; print('✅ Bibliotecas OK')"
+
+# ============================================================
+
+# ===========================================================
+# 🔹 Framework Web (para relatórios interativos)
+# ===========================================================
+Flask
+
+
