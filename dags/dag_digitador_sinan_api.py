@@ -27,7 +27,7 @@ import sys
 # =========================================================
 # CONFIGURAÇÕES
 # =========================================================
-DAG_ID = "digitador_sinan_api"
+DAG_ID = "2_digitador_sinan_api"
 
 DEFAULT_ARGS = {
     "owner": "andre",
@@ -46,7 +46,7 @@ def get_env_vars():
     env_vars = os.environ.copy()
     
     # Override para Docker -> Host / Containers
-    env_vars["CONECTOR_DB_HOST"] = "host.docker.internal"
+    env_vars["CONECTOR_DB_HOST"] = "postgres_redcap"
     env_vars["CONECTOR_DB_PORT"] = "5432"
     env_vars["CONECTOR_DB_NAME"] = "pg_redcap"
     env_vars["CONECTOR_DB_USER"] = "postgres"

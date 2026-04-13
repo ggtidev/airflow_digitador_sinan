@@ -18,7 +18,7 @@ import os
 # =========================================================
 # CONFIGURAÇÕES
 # =========================================================
-DAG_ID = "etl_redcap_sinan"
+DAG_ID = "1_etl_redcap_sinan"
 
 DEFAULT_ARGS = {
     "owner": "andre",

@@ -1,0 +1,38 @@
+# Plano de Containerização da API do Digitador
+
+Este plano visa mover a execução da API (FastAPI) do Windows Host para dentro do Docker. Isso garante que a API esteja sempre disponível, tenha acesso direto aos bancos de dados via rede interna e possa ser acessada pelo RPA no Windows via `localhost:8000`.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Porta 8000**: A API será exposta na porta 8000 do servidor. O Robô no Windows acessará via `http://localhost:8000`.
+> **Dependências**: O container instalará as dependências na primeira execução.
+
+## Proposed Changes
+
+### [Docker Config]
+
+#### [MODIFY] [docker-compose.yaml](file:///c:/airflow-docker/docker-compose.yaml)
+Adicionar o serviço `sinan-api` com as seguintes características:
+- Imagem: `python:3.10-slim`.
+- Rede: `airflow-net` (mesma do Airflow e Bancos).
+- Volume: Mapeamento da pasta `./projects/sinan/2_digitador_sinan_api`.
+- Variáveis de ambiente: Configuração completa dos hosts dos bancos de dados.
+
+### [Airflow DAGs]
+
+#### [NEW] [dag_api_status.py](file:///c:/airflow-docker/dags/dag_api_status.py)
+Uma nova DAG simples para monitorar se a API está online:
+- Tarefa: `check_api_health`.
+- Ação: Envia um GET para `http://sinan-api:8000/notificacoes` e valida o status 200.
+
+## Open Questions
+
+- Nenhuma no momento.
+
+## Verification Plan
+
+### Manual Verification
+- Executar `docker compose up -d sinan-api`.
+- Acessar `http://localhost:8000/docs` no navegador do servidor para ver o Swagger.
+- Rodar a DAG `api_status` no Airflow.

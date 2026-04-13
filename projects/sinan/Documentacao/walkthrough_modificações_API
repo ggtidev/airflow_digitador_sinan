@@ -1,0 +1,36 @@
+# Walkthrough: API Digitador no Docker
+
+Concluí a configuração do ambiente para o seu projeto. Agora a API do Digitador roda automaticamente como um serviço do Docker, de forma segura e integrada.
+
+## ✨ O que foi implementado
+
+### 1. API Containerizada
+Adicionei o serviço `sinan-api` ao seu `docker-compose.yaml`.
+- **Auto-Suficiente**: Ele instala as dependências (`pip install`) e sobe o servidor `uvicorn` automaticamente.
+- **Seguro**: A porta 8000 está vinculada apenas ao `127.0.0.1`. Isso significa que seu Robô no Windows acessa normalmente via `localhost:8000`, mas ninguém de fora do servidor consegue entrar nessa porta.
+
+### 2. Monitoramento de Saúde (HealthCheck)
+Criei uma nova DAG: **`0_api_sinan_status`**.
+- Localização: [dag_api_status.py](file:///c:/airflow-docker/dags/dag_api_status.py)
+- **Função**: Quando você a executa, ela testa se a API está online e informa quantos itens existem na fila pronto para o Robô.
+
+## 🚀 Como usar agora
+
+### Acessar a documentação (Swagger)
+No navegador do próprio servidor, você pode acessar:
+[http://localhost:8000/docs](http://localhost:8000/docs)
+
+### Rodar o seu RPA (Projeto 3)
+Agora você não precisa mais abrir um terminal e digitar `uvicorn`. Basta rodar o seu robô no Windows:
+1. Vá para `C:\airflow-docker\projects\sinan\3_sinan_rpa\`
+2. Execute o seu `main.py` (ou através do seu `.venv` local).
+3. Ele já vai encontrar a API rodando no fundo.
+
+## 📦 Detalhes Técnicos
+- **Container Name**: `sinan_api`
+- **Network**: `airflow-net`
+- **Porta**: `127.0.0.1:8000 -> 8000`
+
+> [!TIP]
+> Para ver os logs da API em tempo real, você pode usar o comando:
+> `docker logs -f sinan_api`

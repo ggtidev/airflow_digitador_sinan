@@ -1,20 +1,20 @@
-#!/usr/bin/env bash
-#🔐 Permissão (obrigatório no Windows + WSL / Git Bash):
+﻿#!/usr/bin/env bash
+#ðŸ” PermissÃ£o (obrigatÃ³rio no Windows + WSL / Git Bash):
 #chmod +x scripts/airflow-init.sh
 set -e
 
-echo "📦 Instalando dependências Python"
+echo "ðŸ“¦ Instalando dependÃªncias Python"
 pip install --no-cache-dir -r /requirements.txt
 
-echo "🗄️ Migrando banco do Airflow"
+echo "ðŸ—„ï¸ Migrando banco do Airflow"
 airflow db migrate
 
-echo "👤 Verificando se usuário admin existe"
+echo "ðŸ‘¤ Verificando se usuÃ¡rio admin existe"
 
 if airflow users list | grep -q "^.*| *${AIRFLOW_ADMIN_USERNAME} *|"; then
-  echo "✅ Usuário '${AIRFLOW_ADMIN_USERNAME}' já existe. Pulando criação."
+  echo "âœ… UsuÃ¡rio '${AIRFLOW_ADMIN_USERNAME}' jÃ¡ existe. Pulando criaÃ§Ã£o."
 else
-  echo "➕ Criando usuário '${AIRFLOW_ADMIN_USERNAME}'"
+  echo "âž• Criando usuÃ¡rio '${AIRFLOW_ADMIN_USERNAME}'"
   airflow users create \
     --username "${AIRFLOW_ADMIN_USERNAME}" \
     --password "${AIRFLOW_ADMIN_PASSWORD}" \
@@ -24,4 +24,4 @@ else
     --email "${AIRFLOW_ADMIN_EMAIL}"
 fi
 
-echo "✅ Airflow inicializado com sucesso"
+echo "âœ… Airflow inicializado com sucesso"

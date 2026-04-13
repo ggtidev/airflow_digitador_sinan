@@ -63,7 +63,8 @@ services:
     image: apache/airflow:2.8.4
     container_name: airflow-webserver
     depends_on:
-      - airflow-init
+      airflow-init:
+        condition: service_completed_successfully
     env_file:
       - .env
     environment:
@@ -89,7 +90,8 @@ services:
     image: apache/airflow:2.8.4
     container_name: airflow-scheduler
     depends_on:
-      - airflow-webserver
+      airflow-init:
+        condition: service_completed_successfully
     env_file:
       - .env
     environment:
@@ -102,6 +104,24 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
     command: scheduler
+    networks:
+      - airflow-net
+
+  # ------------------------------------------------------------
+  # POSTGRES - REDCAP (pg_redcap)
+  # ------------------------------------------------------------
+  postgres_redcap:
+    image: postgres:16
+    container_name: postgres_redcap
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: pg_redcap
+    ports:
+      - "5432:5432"
+    volumes:
+      - redcap_pgdata:/var/lib/postgresql/data
     networks:
       - airflow-net
 
@@ -123,11 +143,50 @@ services:
     networks:
       - airflow-net
 
+  # ------------------------------------------------------------
+  # SINAN API - FASTAPI SERVICE
+  # ------------------------------------------------------------
+  sinan-api:
+    image: python:3.10-slim
+    container_name: sinan_api
+    restart: always
+    depends_on:
+      - postgres_redcap
+      - postgres_sinan
+    env_file:
+      - .env
+    environment:
+      # Hosts internos para comunicação container-container
+      CONECTOR_DB_HOST: postgres_redcap
+      CONECTOR_DB_PORT: 5432
+      CONECTOR_DB_NAME: pg_redcap
+      CONECTOR_DB_USER: postgres
+      CONECTOR_DB_PASSWORD: root
+      API_DB_HOST: postgres_sinan
+      API_DB_PORT: 5432
+      API_DB_NAME: sinan_api
+      API_DB_USER: postgres
+      API_DB_PASSWORD: postgres
+      # URL base para o robô (se necessário dentro do log)
+      API_URL: http://localhost:8000
+    volumes:
+      - ./projects/sinan/2_digitador_sinan_api:/app
+      - ./requirements.txt:/requirements.txt
+    working_dir: /app
+    ports:
+      - "127.0.0.1:8000:8000"
+    command: >
+      sh -c "pip install --no-cache-dir -r /requirements.txt && 
+             uvicorn main:app --host 0.0.0.0 --port 8000"
+    networks:
+      - airflow-net
+
 # ============================================================
 # VOLUMES
 # ============================================================
 volumes:
   airflow-postgres-db:
+  redcap_pgdata:
   sinan_pgdata:
 
     # ============================================================
