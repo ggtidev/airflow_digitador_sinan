@@ -189,9 +189,9 @@ def selecionar_agravo(nome_agravo):
     pyautogui.click(x=72, y=59)
     pyautogui.write(nome_agravo)
     pyautogui.press("enter")
-    time.sleep(2)
+    time.sleep(3)
     pyautogui.press("enter")
-    time.sleep(2)
+    time.sleep(3)
 
 def preencher_bloco_notificacao(campos, num_notificacao):
     global _pergunta_digitando
@@ -587,18 +587,25 @@ def preencher_bloco_notificacao(campos, num_notificacao):
     if campos.get('cep_residencia'): # Pergunta 29
         pyautogui.write(campos['cep_residencia'])
     pyautogui.press("tab") 
-    telefone = campos.get('telefone', '')
+    
+    log_debug(f"Preenchendo campo 30 - TELEFONE: {campos.get('telefone')}")
+    telefone = campos.get('telefone', '') # Pergunta 30
     if telefone and len(telefone) >= 3:
         pyautogui.write(telefone[:2])
         pyautogui.press("tab")
         pyautogui.write(telefone[2:])
         pyautogui.press("tab")
+        time.sleep(0.5)
     else:
         pyautogui.press("tab", presses=2)
-    if campos.get('zona'):
-        log_info(f"Preenchimento da ZONA: {campos['zona']}")
-        pyautogui.write(campos['zona']) # Pergunta 31
+
+    zona = str(campos.get('zona') or '9').strip()
+    log_info(f"Preenchimento campo 31 [ZONA]: {zona}")
+    pyautogui.write(zona) # Pergunta 31
     pyautogui.press("tab")
+    time.sleep(3) 
+    log_debug(f"zona preenchida campo 31: {zona}")
+
     log_debug(f"Idade calculada/fornecida: {idade}")
     return idade
 
@@ -702,7 +709,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     #log_debug(f"Campos (38) DEFICIENCIA: {campos.get('deficiencia')}")
 
     # --- Pergunta 38: Possui algum tipo de deficiência/transtorno? ---
-    _pergunta_digitando = "P38/P39 - Deficiência/Transtorno"
+    _pergunta_digitando = "P38 - Deficiência/Transtorno"
     valor_deficiencia = campos.get('deficiencia', '').strip() or '9'  # Se vier vazio, assume '9' (Ignorado)
     pyautogui.write(valor_deficiencia)
     log_debug(f"Campos (38) DEFICIÊNCIA preenchido: {valor_deficiencia}")
@@ -773,7 +780,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
     # --- VALIDAÇÃO DE ERRO APÓS DEFICIÊNCIAS ---
     # Verifica se houve algum erro de preenchimento (ex: opção inválida em algum dos sub-campos)
     
-    erro_contexto = f"Bloco Deficiências (P38/P39)"
+    erro_contexto = f"Bloco Deficiências (P39)"
     if verificar_e_tratar_erro(num_notificacao, "%VIOLENC%"):
         log_erro(f"(TAB 04 )ERRO DE VALIDAÇÃO DETECTADO após {erro_contexto}")
         raise Exception(f"Erro de digitação em {erro_contexto} para {num_notificacao}. Interrupção forçada.")
@@ -1047,7 +1054,8 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
 
     
     # 1. Obter o valor, usando '9' como padrão se estiver vazio ou ausente ('')
-    _pergunta_digitando = 'P60 - Numero de Envolvidos'
+    _pergunta_digitando = 'P60 - Numero de Envolvidos'
+
     valor_numero_envolvidos = campos.get('numero_envolvidos', '9') # pergunta 60  # out_agres_vio
     log_info(f"[Pergunta 60 ] Número de envolvidos: {valor_numero_envolvidos}")
 
@@ -1264,6 +1272,7 @@ def preencher_bloco_investigacao(campos, idade, num_notificacao):
         
     # --- FIM DA CORREÇÃO NA PERGUNTA 69 ---
 
-    _pergunta_digitando = 'P70 - Observacoes'
+    _pergunta_digitando = 'P70 - Observacoes'
+
     if campos.get('observacoes'): # pergunta 70 (Observações adicionais)
         pyautogui.write(campos['observacoes'])
