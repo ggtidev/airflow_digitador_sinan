@@ -24,6 +24,11 @@ pyautogui.FAILSAFE = True
 # Ajustamos o PAUSE para um valor um pouco maior para compensar o processador U-series
 pyautogui.PAUSE = 0.5 
 pyautogui.MINIMUM_CONFIDENCE = 0.8
+# Evita que o PyAutoGUI lance exceções quando uma imagem não for encontrada
+try:
+    pyautogui.useImageNotFoundException(False)
+except AttributeError:
+    pass
 
 load_dotenv()
 
@@ -324,7 +329,7 @@ def verificar_e_tratar_erro(num_notificacao: str, agravo: str):
             'erro-14-_data_encerramento_deve_ser_maior_igual_data_notificacao.jpg',
             'erro-15-categoria_nao_permitida.jpg',
             'erro-16-_Campo_de_preenchimento_obrigatorio.jpg',
-            'erro-17-_unidade_notificadora_preenchimento_obrigatorio.jpg'
+            'erro-17-_unidade_notificadora_preenchimento_obrigatorio.jpg',
             'erro-18-_notificacao_ja_cadastrada.jpg'
         ]
     ]
@@ -352,8 +357,8 @@ def verificar_e_tratar_erro(num_notificacao: str, agravo: str):
         
         # --- 2. TENTATIVA COM PYAUTOGUI PURO (FALLBACK) ---
         try:
-            # Usando PyAutoGUI padrão: mais lento, mas não depende de OpenCV/MSS.
-            pos_pyautogui = pyautogui.locateOnScreen(template, confidence=0.7, grayscale=True)
+            # Usando PyAutoGUI padrão: mais lento, mas não depende de OpenCV/MSS (ajustado de 0.7 para 0.85 para evitar falsos positivos)
+            pos_pyautogui = pyautogui.locateOnScreen(template, confidence=0.85, grayscale=True)
             
             if pos_pyautogui:
                 # Se for encontrado, clique no centro para focar/fechar o pop-up

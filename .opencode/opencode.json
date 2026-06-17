@@ -1,0 +1,64 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "name": "airflow-digitador-sinan",
+  "description": "Airflow + Docker ETL pipeline: REDCap extraction, SINAN processing, RPA automation",
+  "instructions": [".opencode/AGENTS.md"],
+
+  "agent": {
+    "explore": {
+      "description": "Explore DAGs, ETL scripts, API, and RPA codebase (fast, read-only)",
+      "mode": "subagent",
+      "model": "default",
+      "permission": { "edit": "deny", "bash": "ask" }
+    },
+    "sinan-etl": {
+      "description": "Specialist for ETL pipeline: REDCap extraction, carga scripts, database migrations",
+      "mode": "subagent",
+      "model": "default",
+      "permission": { "bash": "allow", "edit": "ask" },
+      "skills": ["etl-pipeline", "database"]
+    },
+    "sinan-rpa": {
+      "description": "Specialist for RPA automation: PyAutoGUI, OpenCV, SINAN desktop navigation",
+      "mode": "subagent",
+      "model": "default",
+      "permission": { "bash": "allow", "edit": "ask" },
+      "skills": ["rpa-automation"]
+    },
+    "sinan-devops": {
+      "description": "Specialist for Docker/Airflow operations: compose, init, deploy, monitoring",
+      "mode": "subagent",
+      "model": "default",
+      "permission": { "bash": "allow", "edit": "deny" },
+      "skills": ["docker-airflow"]
+    }
+  },
+
+  "command": {
+    "deploy": {
+      "description": "Deploy or update production: git pull, submodule update, docker compose restart",
+      "prompt": "Follow the production deployment guide at projects/sinan/Documentacao/guia_deploy_producao.md. Steps: 1) SSH into server 2) cd airflow_digitador_sinan 3) git pull origin main 4) git submodule update --remote 5) Configure .env if missing 6) docker compose up -d"
+    },
+    "reset-db": {
+      "description": "Reset sinan_api database: drop, recreate, run migrations, seed initial data",
+      "prompt": "1) docker compose down 2) docker compose rm -f postgres_sinan 3) docker volume rm airflow-docker_sinan_pgdata 4) docker compose up -d postgres_sinan 5) Wait for healthcheck 6) cd projects/sinan/2_digitador_sinan_api 7) alembic upgrade head 8) Run carga_violencia.py to seed data"
+    },
+    "carga": {
+      "description": "Run carga script for a specific agravo (default: violencia)",
+      "prompt": "Run one of the carga scripts in projects/sinan/2_digitador_sinan_api/: carga_violencia.py, carga_sifilis.py, carga_toxoplasmose.py, carga_toxoplasmose_gestacional.py, carga_varicela.py, carga_zika.py, carga_creutzfeldt_jakob.py"
+    }
+  },
+
+  "permission": {
+    "read": "allow",
+    "edit": "ask",
+    "bash": "ask",
+    "external_directory": {
+      "*": "allow"
+    }
+  },
+
+  "skills": {
+    "paths": [".opencode/skills"]
+  }
+}
